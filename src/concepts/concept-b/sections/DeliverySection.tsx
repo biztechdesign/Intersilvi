@@ -15,7 +15,7 @@ export function DeliverySection() {
   return (
     <section
       aria-labelledby="delivery-title"
-      className="relative z-[2] -mt-[var(--ov)] [--ov:2.5rem] bg-[linear-gradient(to_bottom,transparent_var(--ov),rgb(var(--ds-color-surface))_var(--ov))] lg:[--ov:4rem]"
+      className="relative z-[2] max-lg:!mt-0 max-lg:!bg-none max-lg:pt-6 -mt-[var(--ov)] [--ov:2.5rem] bg-[linear-gradient(to_bottom,transparent_var(--ov),rgb(var(--ds-color-surface))_var(--ov))] lg:[--ov:4rem]"
     >
       <div className="ds-container">
         <div className="overflow-hidden rounded-lg bg-surface shadow-md">

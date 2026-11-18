@@ -88,7 +88,7 @@ export function LoginForm() {
           onChange={(e) => setPassword(e.target.value)}
           error={errors.password}
           below={
-            <Link href={`${BASE}${AUTH_ROUTES.forgotPassword}`} className="justify-self-end text-body-sm font-semibold text-fg-link">
+            <Link href={`${BASE}${AUTH_ROUTES.forgotPassword}`} className="-my-1 inline-flex min-h-11 items-center justify-self-end text-body-sm font-semibold text-fg-link">
               Forgot password?
             </Link>
           }

@@ -33,8 +33,8 @@ export function PasswordField({ id, label, error, help, below, ...input }: Passw
             icon={shown ? "eye-off" : "eye"}
             label={shown ? "Hide password" : "Show password"}
             aria-pressed={shown}
-            size="sm"
-            className="absolute right-1.5 top-1/2 -translate-y-1/2"
+            size="md"
+            className="absolute right-0 top-0 rounded-full"
             onClick={() => setShown((s) => !s)}
           />
         </span>

@@ -70,8 +70,8 @@ export function SiteFooter() {
         </div>
 
         {/* Brand, link columns and help card */}
-        <div data-stagger="" className="grid grid-cols-1 gap-x-6 gap-y-8 py-10 sm:gap-x-8 md:grid-cols-3 md:gap-y-8 md:py-12 lg:grid-cols-[minmax(0,1.35fr)_repeat(3,minmax(0,1fr))_minmax(0,1.5fr)] lg:py-0">
-          <div className="grid content-start gap-5 md:col-span-3 md:grid-cols-[auto_minmax(0,1fr)] md:items-center md:gap-x-8 md:gap-y-4 lg:col-span-1 lg:grid-cols-1 lg:items-start lg:gap-5 lg:py-14">
+        <div data-stagger="" className="grid grid-cols-1 gap-x-6 gap-y-0 py-8 sm:gap-x-8 md:grid-cols-3 md:gap-y-8 md:py-12 lg:grid-cols-[minmax(0,1.35fr)_repeat(3,minmax(0,1fr))_minmax(0,1.5fr)] lg:py-0">
+          <div className="mb-6 grid content-start gap-5 md:mb-0 md:col-span-3 md:grid-cols-[auto_minmax(0,1fr)] md:items-center md:gap-x-8 md:gap-y-4 lg:col-span-1 lg:grid-cols-1 lg:items-start lg:gap-5 lg:py-14">
             <Link href={BASE} aria-label={`${f.brandName}, home`} className="inline-flex w-fit md:row-span-2 lg:row-span-1">
               <Image src={footerLogo.src} alt="" width={footerLogo.width} height={footerLogo.height} className="h-24 w-auto" />
             </Link>
@@ -103,7 +103,7 @@ export function SiteFooter() {
             </FooterColumn>
           ))}
 
-          <div id="help" className="flex scroll-mt-28 lg:scroll-mt-48 flex-col rounded-lg bg-surface-inverse-raised p-6 md:col-span-3 lg:col-span-1 lg:rounded-none lg:px-8 lg:py-14">
+          <div id="help" className="mt-6 flex scroll-mt-28 md:mt-0 lg:scroll-mt-48 flex-col rounded-lg bg-surface-inverse-raised p-6 md:col-span-3 lg:col-span-1 lg:rounded-none lg:px-8 lg:py-14">
             <h2 className="text-h5">{f.help.title}</h2>
             <ul className="mt-4 grid gap-3 text-body-sm md:grid-cols-2 lg:grid-cols-1">
               <ContactRow icon="pin">

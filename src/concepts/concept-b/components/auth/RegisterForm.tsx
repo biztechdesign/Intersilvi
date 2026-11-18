@@ -117,7 +117,7 @@ export function RegisterForm() {
       </Button>
       <p className="text-center text-body-sm text-fg-secondary">
         Already have an account?{" "}
-        <Link href={`${BASE}${AUTH_ROUTES.login}`} className="font-semibold">
+        <Link href={`${BASE}${AUTH_ROUTES.login}`} className="inline-flex min-h-11 items-center font-semibold">
           Sign in
         </Link>
       </p>

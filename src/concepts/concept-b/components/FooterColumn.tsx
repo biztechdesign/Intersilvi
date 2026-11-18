@@ -11,7 +11,7 @@ export function FooterColumn({ heading, defaultOpen = false, children }: { headi
   const [open, setOpen] = useState(defaultOpen);
   const id = useId();
   return (
-    <nav aria-label={heading} className="border-b border-line-inverse md:border-0 lg:py-14">
+    <nav aria-label={heading} className="border-b border-line-inverse first-of-type:border-t md:border-0 md:first-of-type:border-t-0 lg:py-14">
       <h2 className="font-bold md:mb-3">
         <button
           type="button"
