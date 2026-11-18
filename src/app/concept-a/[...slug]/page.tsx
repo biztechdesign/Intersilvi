@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/concepts/concept-a/components/Button";
+import { stubSlugs } from "@/lib/stubSlugs";
+
+export const dynamicParams = false;
+export const generateStaticParams = () => stubSlugs();
 
 interface StubProps {
   params: Promise<{ slug: string[] }>;

@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/concepts/concept-b/components/Button";
 import { BASE } from "@/concepts/concept-b/base";
+import { stubSlugs } from "@/lib/stubSlugs";
+import { QueryFilters } from "./QueryFilters";
+
+export const dynamicParams = false;
+export const generateStaticParams = () => stubSlugs();
 
 interface StubProps {
   params: Promise<{ slug: string[] }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
 function titleFrom(slug: string[]): string {
@@ -21,12 +25,9 @@ export async function generateMetadata({ params }: StubProps): Promise<Metadata>
  * Catch-all for links that lead outside this phase: categories, the model listing and designer, cart, account, legal pages.
  * The rosette journey is Homepage, Model listing, Product detail, then the separate designer.
  */
-export default async function StubPage({ params, searchParams }: StubProps) {
-  const [{ slug }, query] = await Promise.all([params, searchParams]);
+export default async function StubPage({ params }: StubProps) {
+  const { slug } = await params;
   const isDesign = slug[0] === "design-your-own";
-  const filters = Object.entries(query)
-    .filter(([, v]) => typeof v === "string")
-    .map(([k, v]) => `${k}: ${v}`);
   return (
     <section aria-labelledby="stub-title" className="ds-container grid min-h-[60vh] content-start justify-items-start gap-5 py-section">
       <p className="text-label text-fg-muted [overflow-wrap:anywhere]">
@@ -40,7 +41,7 @@ export default async function StubPage({ params, searchParams }: StubProps) {
           ? "The model listing lives here: choose a rosette model, open its detail page, then start the designer. This flow is outside the scope of the homepage prototype."
           : "This page isn't part of the homepage prototype. The link is here so the navigation and journeys can be reviewed."}
       </p>
-      {filters.length ? <p className="rounded-md bg-surface-alt px-4 py-2 text-body-sm text-fg-secondary">Pre-selected from the homepage: {filters.join(", ")}</p> : null}
+      <QueryFilters />
       <ButtonLink href={BASE}>Back to the homepage</ButtonLink>
     </section>
   );

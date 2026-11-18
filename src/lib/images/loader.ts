@@ -19,5 +19,6 @@ export default function imageLoader({ src, width, quality }: { src: string; widt
     return url.toString();
   }
   // Local files are served as-is; the width hint keeps next/image from warning about an ignored width.
-  return `${src}${src.includes("?") ? "&" : "?"}w=${width}`;
+  const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+  return `${base}${src}${src.includes("?") ? "&" : "?"}w=${width}`;
 }
