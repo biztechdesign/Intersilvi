@@ -262,7 +262,7 @@ export function RosetteBuilder({ colours }: { colours: RibbonColour[] }) {
                   onClick={() => go(i)}
                   aria-current={active ? "step" : undefined}
                   className={cx(
-                    "relative flex h-full w-full flex-col items-center gap-1.5 px-1 py-3 text-center transition-colors duration-fast sm:flex-row sm:gap-2.5 sm:px-3 sm:text-left lg:px-4",
+                    "relative flex h-full w-full flex-col items-center gap-1.5 px-1 py-3 text-center transition-colors duration-fast sm:flex-row sm:gap-2 sm:px-2.5 sm:text-left lg:gap-2.5 lg:px-4",
                     "after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:bg-brand-navy after:transition-transform after:duration-base after:ease-emphasized",
                     active ? "bg-selected-surface after:scale-x-100" : "after:scale-x-0 hover:bg-surface-alt",
                   )}

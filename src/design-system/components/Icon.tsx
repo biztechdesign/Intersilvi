@@ -46,6 +46,7 @@ const SYMBOLS = {
   clock: "schedule",
   chat: "chat_bubble",
   image: "image",
+  apartment: "apartment",
   eye: "visibility",
   "eye-off": "visibility_off",
 } as const;

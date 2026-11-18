@@ -21,7 +21,7 @@ export function HeroSection() {
       </div>
 
       <div className="ds-container relative z-[1] -mt-14 sm:-mt-20 lg:mt-0 lg:flex lg:min-h-[max(26rem,calc(100svh-389px))] lg:items-end lg:py-8">
-        <div className="max-w-[35rem] rounded-lg bg-surface-inverse p-6 text-fg-inverse shadow-lg sm:p-8 lg:bg-surface-inverse/90 lg:p-9">
+        <div className="max-w-[35rem] md:max-w-[40rem] lg:max-w-[35rem] rounded-lg bg-surface-inverse p-6 text-fg-inverse shadow-lg sm:p-8 lg:bg-surface-inverse/90 lg:p-9">
           {/* The page's one authored entrance: heading, intro, actions, 120ms apart (CSS only, see docs/MOTION.md). */}
           <h1 id="hero-title" className="ds-enter text-h1">
             {hero.titleLines[0]}

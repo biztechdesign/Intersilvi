@@ -57,7 +57,7 @@ export function SiteHeader({ markets, nav, utility, base, cartCount = 0 }: SiteH
               {contact.email}
             </a>
           </div>
-          <div className="flex items-stretch gap-5 lg:gap-8">
+          <div className="flex items-stretch gap-0 lg:gap-8">
             {/* Quickorder comes first and fills the bar from top to bottom in brand yellow. */}
             <span className="hidden items-stretch sm:flex">
               <QuickOrder variant="tab" />

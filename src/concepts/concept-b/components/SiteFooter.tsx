@@ -10,6 +10,7 @@ import { BASE } from "../base";
 /** Client-supplied logo (transparent, cropped to the artwork, 640px wide for 2x). The original is kept beside it as logo-silvi-original.webp. */
 const footerLogo = { src: "/images/concept-b/logo-silvi-footer.webp", width: 900, height: 510 };
 import { FooterNewsletter } from "./FooterNewsletter";
+import { FooterColumn } from "./FooterColumn";
 import { media } from "@/content/media";
 import { awardCategories } from "../awardCategories";
 
@@ -69,13 +70,13 @@ export function SiteFooter() {
         </div>
 
         {/* Brand, link columns and help card */}
-        <div data-stagger="" className="grid grid-cols-2 gap-x-6 gap-y-10 py-12 sm:gap-x-8 lg:grid-cols-[minmax(0,1.35fr)_repeat(3,minmax(0,1fr))_minmax(0,1.5fr)] lg:py-0">
-          <div className="col-span-2 grid content-start gap-5 lg:col-span-1 lg:py-14">
-            <Link href={BASE} aria-label={`${f.brandName}, home`} className="inline-flex w-fit">
+        <div data-stagger="" className="grid grid-cols-1 gap-x-6 gap-y-8 py-10 sm:gap-x-8 md:grid-cols-3 md:gap-y-8 md:py-12 lg:grid-cols-[minmax(0,1.35fr)_repeat(3,minmax(0,1fr))_minmax(0,1.5fr)] lg:py-0">
+          <div className="grid content-start gap-5 md:col-span-3 md:grid-cols-[auto_minmax(0,1fr)] md:items-center md:gap-x-8 md:gap-y-4 lg:col-span-1 lg:grid-cols-1 lg:items-start lg:gap-5 lg:py-14">
+            <Link href={BASE} aria-label={`${f.brandName}, home`} className="inline-flex w-fit md:row-span-2 lg:row-span-1">
               <Image src={footerLogo.src} alt="" width={footerLogo.width} height={footerLogo.height} className="h-24 w-auto" />
             </Link>
-            <p className="max-w-[32ch] text-body-sm leading-relaxed text-fg-inverse-muted">{f.description}</p>
-            <ul className="flex gap-3" aria-label="Social media">
+            <p className="max-w-none md:max-w-none lg:max-w-[32ch] text-body-sm leading-relaxed text-fg-inverse-muted">{f.description}</p>
+            <ul className="flex gap-3 md:col-start-2 lg:col-start-1" aria-label="Social media">
               {f.social.map((s) => (
                 <li key={s.label}>
                   <Link
@@ -90,9 +91,8 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {f.columns.map((col) => (
-            <nav key={col.heading} aria-label={col.heading} className="lg:py-14">
-              <h2 className="mb-3 font-bold">{col.heading}</h2>
+          {f.columns.map((col, i) => (
+            <FooterColumn key={col.heading} heading={col.heading} defaultOpen={i === 0}>
               <ul className="grid lg:gap-1">
                 {col.links.map((l) => (
                   <li key={l.label}>
@@ -100,12 +100,12 @@ export function SiteFooter() {
                   </li>
                 ))}
               </ul>
-            </nav>
+            </FooterColumn>
           ))}
 
-          <div id="help" className="col-span-2 flex scroll-mt-28 lg:scroll-mt-48 flex-col rounded-lg bg-surface-inverse-raised p-6 lg:col-span-1 lg:rounded-none lg:px-8 lg:py-14">
+          <div id="help" className="flex scroll-mt-28 lg:scroll-mt-48 flex-col rounded-lg bg-surface-inverse-raised p-6 md:col-span-3 lg:col-span-1 lg:rounded-none lg:px-8 lg:py-14">
             <h2 className="text-h5">{f.help.title}</h2>
-            <ul className="mt-4 grid gap-3 text-body-sm">
+            <ul className="mt-4 grid gap-3 text-body-sm md:grid-cols-2 lg:grid-cols-1">
               <ContactRow icon="pin">
                 <address className="not-italic">{f.help.address}</address>
               </ContactRow>
@@ -121,7 +121,7 @@ export function SiteFooter() {
               </ContactRow>
               <ContactRow icon="clock">{f.help.hours}</ContactRow>
             </ul>
-            <ButtonLink href={`mailto:${contact.email}`} variant="outline" inverse iconEnd="arrow-right" className="mt-6 w-full">
+            <ButtonLink href={`mailto:${contact.email}`} variant="outline" inverse iconEnd="arrow-right" className="mt-6 w-full md:w-auto md:self-start lg:w-full">
               {f.help.action}
             </ButtonLink>
           </div>

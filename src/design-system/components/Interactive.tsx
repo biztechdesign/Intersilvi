@@ -80,19 +80,34 @@ export interface DialogProps {
   footer?: (close: () => void) => ReactNode;
   /** "modal": centred. "drawer": slides from the right (filters, mini-cart). On phones both are full-width sheets. */
   variant?: "modal" | "drawer";
+  /** Open as soon as it mounts (for a dialog the flow opens itself, not a trigger). */
+  openOnMount?: boolean;
+  /** false: no close button, Escape and outside click do nothing (a step the customer must complete). Default true. */
+  dismissible?: boolean;
+  onClose?: () => void;
 }
 
 /**
  * Dialog built on native <dialog>: focus is trapped, Escape closes, focus returns to the trigger.
  * Use for tasks that need focus (Quickorder, filters on mobile); never for content that could sit inline.
  */
-export function Dialog({ title, description, trigger, children, footer, variant = "modal" }: DialogProps) {
+export function Dialog({ title, description, trigger, children, footer, variant = "modal", openOnMount, dismissible = true, onClose }: DialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const descId = useId();
   const open = useCallback(() => ref.current?.showModal(), []);
   const close = useCallback(() => ref.current?.close(), []);
   const drawer = variant === "drawer";
+  useEffect(() => {
+    if (openOnMount && ref.current && !ref.current.open) ref.current.showModal();
+    if (!openOnMount) return;
+    /* A dialog the flow opens itself also locks page scroll while it is up. */
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [openOnMount]);
   return (
     <>
       {trigger(open)}
@@ -100,8 +115,14 @@ export function Dialog({ title, description, trigger, children, footer, variant 
         ref={ref}
         aria-labelledby={titleId}
         aria-describedby={description ? descId : undefined}
+        onClose={() => {
+          /* Escape pressed twice can still close a native dialog: a mandatory step opens again. */
+          if (!dismissible) ref.current?.showModal();
+          else onClose?.();
+        }}
+        onCancel={dismissible ? undefined : (e) => e.preventDefault()}
         onClick={(e) => {
-          if (e.target === ref.current) close();
+          if (dismissible && e.target === ref.current) close();
         }}
         className={cx(
           "max-h-[100dvh] w-full max-w-[100vw] border-0 bg-surface p-0 text-fg shadow-lg",
@@ -122,7 +143,7 @@ export function Dialog({ title, description, trigger, children, footer, variant 
                 </p>
               ) : null}
             </div>
-            <IconButton icon="close" label="Close" onClick={close} className="-mr-2 -mt-1" />
+            {dismissible ? <IconButton icon="close" label="Close" onClick={close} className="-mr-2 -mt-1" /> : null}
           </header>
           <div className="flex-1 overflow-y-auto px-6 py-5">{children}</div>
           {footer ? <footer className="flex flex-wrap justify-end gap-3 border-t border-line px-6 py-4">{footer(close)}</footer> : null}

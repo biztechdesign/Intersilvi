@@ -21,7 +21,21 @@ export interface RegisterInput {
   password: string;
 }
 
+export type AccountKind = "company" | "personal";
+export interface LinkedAccount {
+  id: string;
+  name: string;
+  /** Secondary line, when the account has one. */
+  detail?: string;
+  kind: AccountKind;
+}
+export const ACCOUNT_KIND_LABEL: Record<AccountKind, string> = { company: "Company / Association", personal: "Personal / Kennel" };
+
 export interface AuthAdapter {
+  /** Accounts linked to the signed-in customer. One account (or none) means no choice is needed. */
+  listAccounts(): Promise<LinkedAccount[]>;
+  /** Makes the account the active one for payments, order history and saved logos. */
+  selectAccount(id: string): Promise<{ ok: true } | { ok: false; code: "server_error" }>;
   signIn(email: string, password: string): Promise<SignInResult>;
   register(input: RegisterInput): Promise<RegisterResult>;
 }
@@ -29,7 +43,25 @@ export interface AuthAdapter {
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const accounts = new Map<string, string>([["demo@intersilvi.se", "Silvi-demo-1"]]);
 
+/** PROTOTYPE records that mirror the client's reference. A real storefront returns these from the customer API. */
+const demoAccounts: LinkedAccount[] = [
+  { id: "a1", name: "Daniel (info) Listerud", detail: "Inter Silvi AB (info)", kind: "company" },
+  { id: "a2", name: "Inter Silvi AB (main)", detail: "Inter Silvi AB (main)", kind: "company" },
+  { id: "a3", name: "DEED", detail: "DEED", kind: "company" },
+  { id: "a4", name: "Daniel Listerud", kind: "personal" },
+];
+let selectFailures = 1; // the first selection of DEED fails once, so the retry path can be seen
+
 export const authAdapter: AuthAdapter = {
+  async listAccounts() {
+    await wait(300);
+    return demoAccounts;
+  },
+  async selectAccount(id) {
+    await wait(700);
+    if (id === "a3" && selectFailures-- > 0) return { ok: false, code: "server_error" };
+    return { ok: true };
+  },
   async signIn(email, password) {
     await wait(700);
     const e = email.trim().toLowerCase();

@@ -39,7 +39,7 @@ colors:
 typography:
   display:
     fontFamily: "Manrope, Helvetica Neue, Arial, sans-serif"
-    fontSize: "clamp(2.5rem, 2rem + 1.5vw, 3.5rem)"
+    fontSize: "clamp(2.25rem, 1.893rem + 1.786vw, 3.5rem)"
     fontWeight: 800
     lineHeight: 1.08
     letterSpacing: "-0.025em"
@@ -51,13 +51,13 @@ typography:
     letterSpacing: "-0.01em"
   h1:
     fontFamily: "Manrope, Helvetica Neue, Arial, sans-serif"
-    fontSize: "clamp(2.125rem, 1.8rem + 1vw, 2.75rem)"
+    fontSize: "clamp(2rem, 1.786rem + 1.071vw, 2.75rem)"
     fontWeight: 800
     lineHeight: 1.12
     letterSpacing: "-0.025em"
   h2:
     fontFamily: "Manrope, Helvetica Neue, Arial, sans-serif"
-    fontSize: "clamp(1.875rem, 1.55rem + 1vw, 2.5rem)"
+    fontSize: "clamp(1.75rem, 1.607rem + 0.714vw, 2.25rem)"
     fontWeight: 800
     lineHeight: 1.14
     letterSpacing: "-0.025em"
@@ -281,7 +281,7 @@ Motion: 160 / 220 / 400ms, plus 560ms for entrances. `ease-standard` is for inte
 | Area | Concept A | Concept B | Design system |
 |---|---|---|---|
 | Typefaces | Schibsted Grotesk | Hanken Grotesk + Newsreader serif on **every** H2 (`b-h2`) | Manrope; Instrument Serif once per page |
-| Section titles | `display-2` up to **68px** | `display-2` up to **60px** | H2 max **40px** |
+| Section titles | `display-2` up to **68px** | `display-2` up to **60px** | H2 max **36px** |
 | Hero | 76–80px | `display-1` up to **88px** | display max **56px** |
 | Navy | #16244f / #0c1531 | #14264f / #0b1a3d | #0B1D40 |
 | Yellow | #f4c20d | #f6c315 | #F4BE24 |
@@ -300,7 +300,7 @@ Duplicated in both concepts: `Button`, `Icon`, `Logo`, `Photo`, `SearchForm`, `Q
 1. **Pick the surviving concept layout** (or hybrid). Migration targets that one; the other stays frozen as a reference.
 2. **Shell first (low risk, high consistency):** wrap the concept route in `.ds`, load Manrope, swap `SiteHeader`/`UtilityBar`/`PrimaryNavRow`/`SiteFooter`/`HelpPanel` and `Button` for the shared ones. Keep section layouts untouched.
 3. **Commerce surfaces:** replace concept `ProductCard`s and category cards with `ProductCard` / `CategoryCard`; map adapter data at the page edge (see `toCard` in `src/app/design-system/page.tsx`).
-4. **Typography pass:** replace `a-display-*` / `b-display-*` with `SectionHeading` (H2 40px) and `text-display` for the hero; keep a single `text-serif-display` statement if the brand story wants it.
+4. **Typography pass:** replace `a-display-*` / `b-display-*` with `SectionHeading` (H2 36px) and `text-display` for the hero; keep a single `text-serif-display` statement if the brand story wants it.
 5. **Colour pass:** replace `a-*`/`b-*` colour utilities with semantic roles; reduce navy bands to one plus footer.
 6. **Delete** the concept component duplicates and the `a-`/`b-` token sets once nothing references them.
 7. Re-run `/impeccable audit` and `critique` on the migrated page at 1920/1440/1024/768/390/320.

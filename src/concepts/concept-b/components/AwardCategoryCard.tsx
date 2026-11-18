@@ -14,7 +14,7 @@ export function AwardCategoryCard({ category, priority }: { category: AwardCateg
   return (
     <Link
       href={category.href}
-      className="group relative isolate block aspect-[4/3] overflow-hidden rounded-lg bg-surface-inverse text-fg-inverse no-underline sm:aspect-[3/4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-4"
+      className="group relative isolate block aspect-[4/3] overflow-hidden rounded-lg bg-surface-inverse text-fg-inverse no-underline sm:aspect-[4/5] lg:aspect-[3/4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-navy focus-visible:ring-offset-4"
     >
       <div className={`absolute inset-0 ${motionClass.mediaZoom}`}>
         <Photo

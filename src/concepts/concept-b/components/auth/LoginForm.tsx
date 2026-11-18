@@ -42,7 +42,10 @@ export function LoginForm() {
     setBusy(false);
     if (result.ok) {
       setDone(true);
-      router.push(safeNext(new URLSearchParams(window.location.search).get("next"), BASE) ?? `${BASE}${AUTH_ROUTES.account}`);
+      const next = safeNext(new URLSearchParams(window.location.search).get("next"), BASE);
+      const linked = await authAdapter.listAccounts();
+      /* Several linked accounts: choose one first, then continue to the intended page. */
+      router.push(linked.length > 1 ? `${BASE}/account/choose${next ? `?next=${encodeURIComponent(next)}` : ""}` : next ?? `${BASE}${AUTH_ROUTES.account}`);
       return;
     }
     setPassword("");

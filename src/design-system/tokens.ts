@@ -120,32 +120,35 @@ export const fontFamily = {
 type FontSize = [string, { lineHeight: string; letterSpacing?: string; fontWeight?: string }];
 
 /**
- * Type scale. Fluid sizes clamp between a mobile minimum and a desktop maximum.
- * Desktop targets: display 56, h1 44, h2 40, h3 26, card title 20, body 16, small 14, label 13, caption 12.
+ * Type scale, the single source for font sizes. Fluid sizes clamp(min, intercept + slope vw, max) and reach their
+ * minimum at 320px and maximum at 1440px, so there are no breakpoint-specific sizes anywhere.
+ *   display 36→56, h1 32→44, h2 28→36, h3 22→26, lead 17→20, card title 16→20, price-lg 24→30, stat 48→80.
+ * Fixed: h4 20, h5 18, h6 16, body 16, small 14, label 13, caption 12, nav 15, button 15, button-sm 13.
+ * Line heights: display 1.1, h1 1.15, h2 1.2, h3 1.25, lead 1.5, body 1.55, small 1.45.
  */
 export const fontSize: Record<string, FontSize> = {
-  display: ["clamp(2.5rem, 2rem + 1.5vw, 3.5rem)", { lineHeight: "1.08", letterSpacing: "-0.025em", fontWeight: "800" }],
+  display: ["clamp(2.25rem, 1.893rem + 1.786vw, 3.5rem)", { lineHeight: "1.1", letterSpacing: "-0.025em", fontWeight: "800" }],
   /** One headline number, such as a lead time. Tabular, extra bold, tight. */
-  stat: ["clamp(4rem, 2.9rem + 3.4vw, 6rem)", { lineHeight: "0.9", letterSpacing: "-0.04em", fontWeight: "800" }],
+  stat: ["clamp(3rem, 2.429rem + 2.857vw, 5rem)", { lineHeight: "0.9", letterSpacing: "-0.04em", fontWeight: "800" }],
   "serif-display": ["clamp(2.75rem, 2rem + 2.2vw, 4rem)", { lineHeight: "1.04", letterSpacing: "-0.01em", fontWeight: "400" }],
-  h1: ["clamp(2.125rem, 1.8rem + 1vw, 2.75rem)", { lineHeight: "1.12", letterSpacing: "-0.025em", fontWeight: "800" }],
-  h2: ["clamp(1.875rem, 1.55rem + 1vw, 2.5rem)", { lineHeight: "1.14", letterSpacing: "-0.025em", fontWeight: "800" }],
-  h3: ["clamp(1.375rem, 1.25rem + 0.4vw, 1.625rem)", { lineHeight: "1.25", letterSpacing: "-0.012em", fontWeight: "700" }],
+  h1: ["clamp(2rem, 1.786rem + 1.071vw, 2.75rem)", { lineHeight: "1.15", letterSpacing: "-0.025em", fontWeight: "800" }],
+  h2: ["clamp(1.75rem, 1.607rem + 0.714vw, 2.25rem)", { lineHeight: "1.2", letterSpacing: "-0.025em", fontWeight: "800" }],
+  h3: ["clamp(1.375rem, 1.304rem + 0.357vw, 1.625rem)", { lineHeight: "1.25", letterSpacing: "-0.012em", fontWeight: "700" }],
   h4: ["1.25rem", { lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "700" }],
   h5: ["1.125rem", { lineHeight: "1.35", letterSpacing: "-0.005em", fontWeight: "700" }],
   h6: ["1rem", { lineHeight: "1.4", fontWeight: "700" }],
-  "card-title": ["clamp(1.0625rem, 1rem + 0.25vw, 1.25rem)", { lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "700" }],
-  lead: ["clamp(1.0625rem, 1rem + 0.3vw, 1.25rem)", { lineHeight: "1.55" }],
+  "card-title": ["clamp(1rem, 0.929rem + 0.357vw, 1.25rem)", { lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "700" }],
+  lead: ["clamp(1.0625rem, 1.009rem + 0.268vw, 1.25rem)", { lineHeight: "1.5" }],
   "body-lg": ["1.125rem", { lineHeight: "1.6" }],
-  body: ["1rem", { lineHeight: "1.6" }],
-  "body-sm": ["0.875rem", { lineHeight: "1.5" }],
+  body: ["1rem", { lineHeight: "1.55" }],
+  "body-sm": ["0.875rem", { lineHeight: "1.45" }],
   label: ["0.8125rem", { lineHeight: "1.35", letterSpacing: "0.01em", fontWeight: "600" }],
   caption: ["0.75rem", { lineHeight: "1.4", letterSpacing: "0.01em" }],
   nav: ["0.9375rem", { lineHeight: "1.4", fontWeight: "600" }],
   button: ["0.9375rem", { lineHeight: "1.2", letterSpacing: "0.005em", fontWeight: "700" }],
   "button-sm": ["0.8125rem", { lineHeight: "1.2", letterSpacing: "0.01em", fontWeight: "700" }],
   price: ["1.125rem", { lineHeight: "1.2", letterSpacing: "-0.01em", fontWeight: "800" }],
-  "price-lg": ["clamp(1.5rem, 1.35rem + 0.5vw, 1.875rem)", { lineHeight: "1.15", letterSpacing: "-0.015em", fontWeight: "800" }],
+  "price-lg": ["clamp(1.5rem, 1.393rem + 0.536vw, 1.875rem)", { lineHeight: "1.15", letterSpacing: "-0.015em", fontWeight: "800" }],
 };
 
 /** Readable measures for text blocks. */

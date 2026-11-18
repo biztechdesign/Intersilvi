@@ -16,15 +16,15 @@ export function DesignSection({ colours }: { colours: RibbonColour[] }) {
   return (
     <section id="design" aria-labelledby="design-title" className="scroll-mt-24 bg-surface py-section">
       <div className="ds-container grid items-start gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,17fr)] lg:gap-12">
-        <div data-stagger="" className="grid content-start justify-items-start gap-6 lg:pt-12">
+        <div data-stagger="" className="grid content-start justify-items-center gap-6 text-center lg:justify-items-start lg:pt-12 lg:text-left">
           <div>
             <Eyebrow>{eyebrows.design}</Eyebrow>
-            <h2 id="design-title" className="text-h2 max-w-[14ch]">
+            <h2 id="design-title" className="text-h2 mx-auto max-w-[24ch] lg:mx-0 lg:max-w-[14ch]">
               Create your own award rosette
             </h2>
           </div>
-          <p className="max-w-[36ch] text-lead text-fg-secondary">{designSection.intro}</p>
-          <div className="flex flex-wrap gap-3">
+          <p className="max-w-[56ch] text-lead text-fg-secondary lg:max-w-[36ch]">{designSection.intro}</p>
+          <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
             <ButtonLink href={`${BASE}/design-your-own`} variant="shop" className="w-full sm:w-auto">
               {designSection.action.label}
             </ButtonLink>

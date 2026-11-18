@@ -19,17 +19,17 @@ Sizes are fluid between a phone minimum and a desktop maximum. Desktop values ar
 
 | Token | Phone → desktop | Line height | Weight | Tracking | Use |
 |---|---|---|---|---|---|
-| `text-stat` | 64 → 96px | 0.9 | 800 | −0.04em | One headline number, e.g. a lead time (with `ds-numeric`) |
+| `text-stat` | 48 → 80px | 0.9 | 800 | −0.04em | One headline number, e.g. a lead time (with `ds-numeric`) |
 | `text-serif-display` | 44 → 64px | 1.04 | 400 | −0.01em | One editorial statement |
-| `text-display` | 40 → 56px | 1.08 | 800 | −0.025em | Hero headline |
-| `text-h1` | 34 → 44px | 1.12 | 800 | −0.025em | Page title (category, product, article) and the homepage hero headline |
-| `text-h2` | 30 → 40px | 1.14 | 800 | −0.025em | Section title (extra bold, so it carries the page) |
+| `text-display` | 36 → 56px | 1.1 | 800 | −0.025em | Hero headline |
+| `text-h1` | 32 → 44px | 1.15 | 800 | −0.025em | Page title (category, product, article) and the homepage hero headline |
+| `text-h2` | 28 → 36px | 1.2 | 800 | −0.025em | Section title (extra bold, so it carries the page) |
 | `text-h3` | 22 → 26px | 1.25 | 700 | −0.012em | Sub-section, featured card |
 | `text-h4` | 20px | 1.3 | 700 | −0.01em | Panel and dialog titles |
 | `text-h5` | 18px | 1.35 | 700 | −0.005em | Group titles, summary titles |
 | `text-h6` | 16px | 1.4 | 700 | 0 | List and accordion titles |
-| `text-card-title` | 17 → 20px | 1.3 | 700 | −0.01em | Product and category names |
-| `text-lead` | 17 → 20px | 1.55 | 400 | 0 | Intro under a heading |
+| `text-card-title` | 16 → 20px | 1.3 | 700 | −0.01em | Product and category names |
+| `text-lead` | 17 → 20px | 1.5 | 400 | 0 | Intro under a heading |
 | `text-body-lg` | 18px | 1.6 | 400 | 0 | Long-form articles |
 | `text-body` | 16px | 1.6 | 400 | 0 | Running text |
 | `text-body-sm` | 14px | 1.5 | 400 | 0 | Secondary copy, tables, help text |

@@ -39,11 +39,11 @@ export function PrimaryNav({ groups }: { groups: NavGroup[] }) {
 
   /* One line at every desktop width: the type scales with the viewport (13px at 1024px up to 16px) and the items spread across the row. Underline that grows on hover and while a panel is open; the design journey's underline is yellow. */
   const link =
-    `relative inline-flex min-h-14 items-center gap-1.5 whitespace-nowrap text-[clamp(0.8125rem,1.28vw,1rem)] font-medium text-fg no-underline transition-colors duration-fast ease-standard after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-fg data-[active=true]:after:h-[3px] ${motionClass.underlineGrow} aria-expanded:after:scale-x-100 data-[active=true]:after:scale-x-100`;
+    `relative inline-flex min-h-14 items-center gap-1 whitespace-nowrap text-nav font-medium xl:gap-1.5 text-fg no-underline transition-colors duration-fast ease-standard after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-fg data-[active=true]:after:h-[3px] ${motionClass.underlineGrow} aria-expanded:after:scale-x-100 data-[active=true]:after:scale-x-100`;
 
   return (
     <nav ref={navRef} aria-label="Main" onMouseLeave={() => hoverOpen(null)} className="hidden lg:block">
-      <ul className="flex flex-nowrap justify-between gap-x-4 [&>li]:shrink-0">
+      <ul className="-mx-4 flex flex-nowrap xl:mx-0 justify-between gap-x-1 xl:gap-x-4 [&>li]:shrink-0">
         {groups.map((g) => {
           const hasPanel = g.columns.length > 0;
           const open = openId === g.id;

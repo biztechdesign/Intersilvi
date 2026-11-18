@@ -19,8 +19,8 @@ export function DeliverySection() {
     >
       <div className="ds-container">
         <div className="overflow-hidden rounded-lg bg-surface shadow-md">
-          <div data-stagger="" className="grid lg:grid-cols-[minmax(0,3fr)_minmax(0,4.5fr)_minmax(0,4.5fr)]">
-            <div className="grid content-center gap-1.5 bg-surface-alt px-5 py-5 sm:px-8 lg:py-7">
+          <div data-stagger="" className="grid md:grid-cols-2 lg:grid-cols-[minmax(0,3fr)_minmax(0,4.5fr)_minmax(0,4.5fr)]">
+            <div className="grid content-center gap-1.5 bg-surface-alt px-5 py-5 sm:px-8 md:col-span-2 md:flex md:flex-wrap md:items-baseline md:gap-x-4 md:gap-y-0 md:py-4 lg:col-span-1 lg:grid lg:py-7">
               <h2 id="delivery-title" className="text-h5 font-bold">
                 {delivery.title}
               </h2>
@@ -31,7 +31,7 @@ export function DeliverySection() {
               const [figure, ...unit] = lt.workdays.value.split(" ");
               const unitText = unit.join(" ").replace("workdays", "working days");
               return (
-                <div key={lt.id} className="grid content-center gap-1 border-t border-line px-5 py-5 sm:px-8 lg:border-l lg:border-t-0 lg:py-7">
+                <div key={lt.id} className="grid content-center gap-1 border-t border-line px-5 py-5 sm:px-8 md:[&:nth-child(3)]:border-l lg:border-l lg:border-t-0 lg:py-7">
                   <h3 className="flex items-center gap-2 text-body-sm font-semibold text-fg-secondary">
                     <Icon name={lt.id === "custom" ? "pen" : "box"} size={18} className="flex-none text-brand-navy" />
                     {lt.title}
