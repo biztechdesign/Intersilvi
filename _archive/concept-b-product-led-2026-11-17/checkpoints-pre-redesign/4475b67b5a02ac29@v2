@@ -1,0 +1,79 @@
+import Image from "next/image";
+import Link from "next/link";
+import type { Product } from "@/lib/commerce/types";
+import { RosetteArt } from "@/components/art/RosetteArt";
+import { formatMoney } from "@/lib/format";
+import { Icon } from "./Icon";
+import { WishlistButton } from "./WishlistButton";
+
+/**
+ * Product card: a rounded card with the product on a soft stage, then range, name, verified details and price.
+ * Rows align across a grid through subgrid (the parent list must give each card 5 rows).
+ * The whole card is one link target. Only data the live store states is shown.
+ */
+export function ProductCard({ product, rangeLabel }: { product: Product; rangeLabel?: string }) {
+  const tier = product.tiers[0];
+  return (
+    <article className="group relative row-span-5 grid grid-rows-subgrid gap-0 overflow-hidden rounded-b-card bg-b-paper shadow-b-card transition-shadow duration-300 ease-b-out hover:shadow-b-lift has-[a:focus-visible]:outline has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-[3px] has-[a:focus-visible]:outline-b-navy">
+      <div className="relative aspect-[5/4] overflow-hidden bg-b-stone">
+        <div className="absolute inset-x-[16%] bottom-[6%] top-[10%] transition-transform duration-300 ease-b-out group-hover:-translate-y-[2%] group-hover:scale-[1.03]">
+          {product.image ? (
+            <Image
+              src={product.image.src}
+              alt={product.image.alt}
+              fill
+              sizes="(min-width: 64rem) 22vw, 45vw"
+              className="object-contain object-bottom drop-shadow-[0_14px_14px_rgba(11,26,61,0.2)]"
+            />
+          ) : (
+            <RosetteArt spec={product.art} className="mx-auto h-full w-auto" />
+          )}
+        </div>
+        {product.stock ? (
+          <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-b-pill bg-b-paper px-2.5 py-1 text-b-label font-semibold text-b-ink-2">
+            {product.stock === "in_stock" ? <span aria-hidden="true" className="h-[7px] w-[7px] rounded-full bg-b-success" /> : null}
+            {product.stock === "in_stock" ? "In stock" : "Made to order"}
+          </span>
+        ) : null}
+        <WishlistButton productName={product.name} />
+      </div>
+
+      <div className="px-4 pt-4 sm:px-5">
+        {rangeLabel ? <p className="text-b-label font-semibold text-b-ink-3">{rangeLabel}</p> : null}
+        <h3 className="mt-1 line-clamp-2 text-b-body font-semibold leading-snug [text-wrap:balance] sm:text-b-lead">
+          <Link href={product.href} className="no-underline after:absolute after:inset-0 after:z-[1] focus-visible:shadow-none focus-visible:outline-none">
+            {product.name}
+          </Link>
+        </h3>
+      </div>
+
+      <p className="flex flex-wrap content-start gap-x-3 gap-y-1 px-4 pt-1 text-b-label text-b-ink-3 sm:px-5">
+        {product.awardTerm ? <span className="font-bold tracking-[0.04em] text-b-ink">{product.awardTerm}</span> : null}
+        {product.articleNumber ? <span className="tabular">Art. no. {product.articleNumber}</span> : null}
+        {product.source === "synthetic" ? <span className="italic">Sample product</span> : null}
+      </p>
+
+      <div className="px-4 pt-3 sm:px-5">
+        <p className="flex flex-wrap items-baseline gap-x-1.5 font-bold">
+          {product.priceFrom ? <span className="text-b-small font-normal text-b-ink-2">From</span> : null}
+          <span className="tabular text-[1.25rem] tracking-[-0.01em] sm:text-[1.5rem]">{formatMoney(product.price)}</span>
+        </p>
+        {tier ? (
+          <p className="tabular mt-0.5 text-b-small text-b-ink-2">
+            {formatMoney(tier.unitPrice)} each from {tier.minQuantity} pcs
+          </p>
+        ) : null}
+      </div>
+
+      <div className="self-end px-4 pb-4 pt-4 sm:px-5 sm:pb-5">
+        <span
+          aria-hidden="true"
+          className="flex min-h-11 items-center justify-between gap-2 rounded-b-pill px-5 text-b-small font-semibold text-b-navy shadow-[inset_0_0_0_1.5px_theme(colors.b.navy)] transition-colors group-hover:bg-b-navy group-hover:text-b-on-navy"
+        >
+          View product
+          <Icon name="arrow-right" size={16} className="transition-transform duration-300 ease-b-out group-hover:translate-x-1" />
+        </span>
+      </div>
+    </article>
+  );
+}

@@ -1,0 +1,55 @@
+import type { RibbonMaterial } from "@/lib/commerce/types";
+import { colourSection } from "@/content/homepage";
+import { media } from "@/content/media";
+import { catalogueLink } from "@/content/site";
+import { rebase } from "@/lib/content/paths";
+import { ButtonLink } from "../components/Button";
+import { Photo } from "../components/Photo";
+import { BASE } from "../base";
+
+/** Flat swatches: a screen cannot show a finish truthfully, so each finish is named in text. Only "patterned" gets a stripe. */
+const MATERIAL_BASE: Record<RibbonMaterial, string> = {
+  satin: "#14264f",
+  grosgrain: "#6e1a2c",
+  metallic: "#c9a14a",
+  patterned: "#1f4fb4",
+};
+
+export function ColourSection() {
+  return (
+    <section aria-labelledby="colour-title" className="bg-b-linen py-b-section">
+      <div className="b-container grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-b-card shadow-b-lift lg:aspect-[5/4]">
+          <Photo asset={media.pleatedRibbons} sizes="(min-width: 64rem) 46vw, 100vw" />
+        </div>
+        <div>
+          <h2 id="colour-title" className="b-h2">
+            {colourSection.title}
+          </h2>
+          <p className="b-lead mt-5 text-b-ink-2">{colourSection.intro}</p>
+          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+            {colourSection.materials.map((m) => (
+              <li key={m.id} className="flex items-center gap-4 rounded-b bg-b-paper p-3 shadow-b-card">
+                <span aria-hidden="true" className="relative h-12 w-12 flex-none overflow-hidden rounded-full" style={{ backgroundColor: MATERIAL_BASE[m.id] }}>
+                  {m.id === "patterned" ? <span className="absolute inset-0 bg-[linear-gradient(135deg,transparent_50%,#c9a14a_50%)]" /> : null}
+                </span>
+                <span>
+                  <span className="block font-semibold">{m.name}</span>
+                  <span className="block text-b-small text-b-ink-2">{m.body}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
+            <ButtonLink href={rebase(colourSection.action.href, BASE)} variant="design">
+              Explore the colour chart
+            </ButtonLink>
+            <ButtonLink href={catalogueLink.href} variant="text" external>
+              {catalogueLink.label}
+            </ButtonLink>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

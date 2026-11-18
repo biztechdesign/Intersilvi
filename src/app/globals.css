@@ -1,0 +1,257 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Concept A now uses the shared design system (.ds, below); its own base styles were removed during migration. */
+
+/* Concept B now uses the shared design system too; its .conceptB base styles and b- tokens were removed during migration. */
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/*
+ * Intersilvi shared design system: base styles, scoped to .ds so the concept prototypes are unaffected.
+ * Tokens: src/design-system/tokens.ts (emitted as --ds-* custom properties by tailwind.config.ts).
+ */
+@layer base {
+  /* Control shape. Buttons and single-line inputs read these. The defaults are the original 6px / 4px corners; a surface
+     opts into fully rounded controls with .ds-pill (Concept B). Multi-line text areas stay softly rounded, never a pill. */
+  :root {
+    --ds-radius-button: var(--ds-radius-md);
+    --ds-radius-input: var(--ds-radius-sm);
+    --ds-radius-textarea: var(--ds-radius-sm);
+    --ds-pad-input: 0.875rem;
+  }
+
+  .ds-pill {
+    --ds-radius-button: var(--ds-radius-pill);
+    --ds-radius-input: var(--ds-radius-pill);
+    --ds-radius-textarea: var(--ds-radius-lg);
+    --ds-pad-input: 1.25rem;
+  }
+
+  .ds {
+    @apply bg-surface font-sans text-body text-fg antialiased;
+    caret-color: theme("colors.brand.navy");
+    font-feature-settings: "cv11" on, "ss01" on;
+    overflow-x: clip;
+  }
+
+  .ds ::selection {
+    background: theme("colors.brand.yellow");
+    color: theme("colors.brand.navy");
+  }
+
+  .ds :where(h1, h2, h3, h4, h5, h6) {
+    text-wrap: balance;
+  }
+
+  .ds :where(p, li, dd) {
+    text-wrap: pretty;
+  }
+
+  .ds :where(a) {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  /* One focus treatment everywhere: a 2px ring with a 2px offset, yellow on dark surfaces. */
+  .ds :where(:focus-visible) {
+    outline: 2px solid rgb(var(--ds-color-focus));
+    outline-offset: 2px;
+  }
+
+  .ds :where(.ds-inverse) :where(:focus-visible),
+  .ds-inverse:where(:focus-visible) {
+    outline-color: rgb(var(--ds-color-focus-inverse));
+  }
+
+  .ds :where(dialog)::backdrop {
+    background: rgb(var(--ds-color-overlay) / 0.55);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds *,
+    .ds *::before,
+    .ds *::after {
+      /* Spatial motion is removed (transforms are motion-safe:, entrances and reveals sit behind no-preference).
+         Short colour and opacity transitions stay: they carry state, not movement. */
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* Essential motion keeps running, slower: a loading spinner must still read as "working". */
+    .ds [data-motion="essential"] {
+      animation-duration: 1.5s !important;
+      animation-iteration-count: infinite !important;
+    }
+  }
+}
+
+@layer components {
+  /* Page container: max 1320px with fluid gutters (16 → 40px). */
+  .ds-container {
+    @apply mx-auto w-full max-w-content px-gutter;
+  }
+
+  /* Icons: Material Symbols Rounded, light (wght 300). A pressed parent (e.g. a wishlist heart) fills its icon. */
+  .ds-icon {
+    display: inline-block;
+    flex: none;
+    overflow: hidden;
+    font-family: "Material Symbols Rounded";
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+    font-variation-settings: "wght" 300, "FILL" var(--ds-icon-fill, 0), "GRAD" 0, "opsz" 24;
+  }
+  [aria-pressed="true"] > .ds-icon {
+    --ds-icon-fill: 1;
+  }
+
+  /* Prices and quantities: tabular, lining figures so columns align. */
+  .ds-numeric {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+}
+
+/*
+ * Design-system motion (tokens: src/design-system/tokens.ts → motion; guide: docs/MOTION.md).
+ * Keyframes live in tailwind.config.ts. Everything here is progressive: the default state is visible,
+ * and motion only adds itself when the visitor allows it.
+ */
+/*
+ * Hero arrival: a 22px rise and fade per item, 700ms ease-out, items 120ms apart (five steps, 480ms of stagger).
+ * Only opacity and transform move, and the keyframe has no end state, so an item always lands on its own styling
+ * (hover transforms inside it are never overridden). Never split a heading into words or letters.
+ */
+@keyframes ds-enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--ds-distance-enter));
+  }
+}
+
+@layer components {
+  /* Pure CSS: starts on first paint, so it runs on a hard refresh and on client-side navigation. Steps 1 to 5 in reading order. */
+  @media (prefers-reduced-motion: no-preference) {
+    .ds-enter {
+      animation: ds-enter var(--ds-duration-entrance) var(--ds-ease-enter) backwards;
+    }
+    .ds-enter-2 {
+      animation-delay: var(--ds-stagger);
+    }
+    .ds-enter-3 {
+      animation-delay: calc(var(--ds-stagger) * 2);
+    }
+    .ds-enter-4 {
+      animation-delay: calc(var(--ds-stagger) * 3);
+    }
+    .ds-enter-5 {
+      animation-delay: calc(var(--ds-stagger) * 4);
+    }
+  }
+}
+
+/*
+ * Scroll reveals. Two attributes, both driven by <RevealObserver>:
+ *   data-reveal="" | "fade"   one element rises 24px and fades (fade: opacity only, for photographs).
+ *   data-stagger              a container: its direct children reveal one after another, 100ms apart (capped at 8 steps).
+ * Everything is visible by default. The observer marks only elements it has measured below the fold with
+ * data-reveal-pending (the hidden state) and, when one scrolls into view, swaps that for data-revealed, which plays a
+ * one-shot keyframe animation. Keyframes (not transitions) so the reveal never depends on, or fights with, an element's own
+ * transition utilities, and the keyframe has no end state so hover transforms are never overridden. Each element reveals once.
+ */
+@keyframes ds-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(var(--ds-distance-rise));
+  }
+}
+
+@keyframes ds-reveal-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal][data-reveal-pending] {
+    opacity: 0;
+    transform: translateY(var(--ds-distance-rise));
+  }
+  [data-reveal="fade"][data-reveal-pending] {
+    transform: none;
+  }
+  [data-stagger][data-reveal-pending] > * {
+    opacity: 0;
+    transform: translateY(var(--ds-distance-rise));
+  }
+
+  [data-reveal][data-revealed] {
+    animation: ds-reveal var(--ds-duration-reveal) var(--ds-ease-enter) backwards;
+    animation-delay: var(--ds-reveal-delay, 0ms);
+  }
+  [data-reveal="fade"][data-revealed] {
+    animation-name: ds-reveal-fade;
+  }
+  [data-stagger][data-revealed] > * {
+    animation: ds-reveal var(--ds-duration-reveal) var(--ds-ease-enter) backwards;
+    animation-delay: calc(var(--ds-stagger-reveal) * var(--i, 0));
+  }
+  [data-stagger] > :nth-child(2) { --i: 1; }
+  [data-stagger] > :nth-child(3) { --i: 2; }
+  [data-stagger] > :nth-child(4) { --i: 3; }
+  [data-stagger] > :nth-child(5) { --i: 4; }
+  [data-stagger] > :nth-child(6) { --i: 5; }
+  [data-stagger] > :nth-child(7) { --i: 6; }
+  [data-stagger] > :nth-child(n + 8) { --i: 7; }
+}
+
+/*
+ * Parallax media (craftsmanship photo). CSS scroll-driven: the layer drifts 32px over the section's pass through the
+ * viewport (-16px to +16px), so it travels a little slower than the page. The layer is oversized by 24px top and bottom
+ * by its container, so the clip never shows an edge.
+ * Static by default (JavaScript off, unsupported browser, touch devices, reduced motion): the photo simply sits there.
+ */
+@keyframes ds-parallax {
+  from {
+    transform: translate3d(0, calc(var(--ds-parallax-range, 16px) * -1), 0);
+  }
+  to {
+    transform: translate3d(0, var(--ds-parallax-range, 16px), 0);
+  }
+}
+
+/* Bolder motion for a surface that wants it to read clearly (Concept B): larger reveal and entrance travel, slower landing,
+   wider stagger and a deeper parallax drift. The defaults on :root are unchanged, so other surfaces keep the quieter values. */
+.ds-motion-bold {
+  --ds-distance-rise: 40px;
+  --ds-distance-enter: 30px;
+  --ds-duration-reveal: 800ms;
+  --ds-duration-entrance: 800ms;
+  --ds-stagger-reveal: 140ms;
+  --ds-parallax-range: 36px;
+}
+
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  @supports (animation-timeline: view()) {
+    .ds-parallax {
+      animation: ds-parallax linear both;
+      animation-timeline: view();
+      animation-range: cover;
+      will-change: transform;
+    }
+  }
+}

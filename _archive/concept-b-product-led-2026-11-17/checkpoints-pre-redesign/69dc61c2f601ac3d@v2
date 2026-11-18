@@ -1,0 +1,59 @@
+import { delivery } from "@/content/homepage";
+import { rebase } from "@/lib/content/paths";
+import { ButtonLink } from "../components/Button";
+import { Icon } from "../components/Icon";
+import { PendingFact } from "../components/PendingFact";
+import { BASE } from "../base";
+
+/**
+ * Stock compared with custom delivery times, as a card that overlaps the bottom of the hero.
+ * Static baseline only: the event-date planner (OPT-2) and order-by board (OPT-3) are not approved.
+ */
+export function DeliverySection() {
+  return (
+    <section aria-labelledby="delivery-title" className="relative z-[2] -mt-10 lg:-mt-16">
+      <div className="b-container">
+        <div className="overflow-hidden rounded-b-card bg-b-paper shadow-b-lift">
+          <div className="grid lg:grid-cols-[minmax(0,4fr)_minmax(0,4fr)_minmax(0,4fr)]">
+            <div className="grid content-start gap-3 bg-b-linen p-6 sm:p-8 lg:p-10">
+              <span aria-hidden="true" className="grid h-12 w-12 place-items-center rounded-full bg-b-paper text-b-navy shadow-b-card">
+                <Icon name="truck" size={24} />
+              </span>
+              <h2 id="delivery-title" className="b-display text-b-display-3">
+                {delivery.title}
+              </h2>
+              <p className="max-w-[40ch] text-b-small text-b-ink-2">{delivery.intro}</p>
+            </div>
+            {delivery.leadTimes.map((lt) => (
+              <div key={lt.id} className="grid content-start gap-3 border-t border-b-rule p-6 sm:p-8 lg:border-l lg:border-t-0 lg:p-10">
+                <h3 className="flex items-center gap-3 text-b-lead font-semibold">
+                  <span
+                    aria-hidden="true"
+                    className={`grid h-9 w-9 place-items-center rounded-full ${lt.id === "custom" ? "bg-b-yellow text-b-navy-deep" : "bg-b-navy text-b-on-navy"}`}
+                  >
+                    <Icon name={lt.id === "custom" ? "pen" : "box"} size={18} />
+                  </span>
+                  {lt.title}
+                </h3>
+                <p className="text-b-small text-b-ink-2">{lt.body}</p>
+                <p className="grid gap-1 pt-1">
+                  <span className="text-b-label font-semibold text-b-ink-3">Production time</span>
+                  <span className="tabular text-b-display-3 font-semibold">
+                    <PendingFact fact={lt.workdays} />
+                  </span>
+                </p>
+                <ButtonLink href={rebase(lt.action.href, BASE)} variant={lt.id === "custom" ? "design" : "outline"} className="mt-2 justify-self-start">
+                  {lt.action.label}
+                </ButtonLink>
+              </div>
+            ))}
+          </div>
+          <p className="flex gap-3 border-t border-b-rule px-6 py-4 text-b-small text-b-ink-2 sm:px-8 lg:px-10">
+            <Icon name="truck" size={20} className="mt-0.5 flex-none text-b-navy" />
+            {delivery.shippingNote}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}

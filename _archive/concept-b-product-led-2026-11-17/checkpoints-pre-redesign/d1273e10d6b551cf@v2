@@ -1,0 +1,59 @@
+import { hero } from "@/content/homepage";
+import { media } from "@/content/media";
+import { ButtonLink } from "../components/Button";
+import { Icon, type IconName } from "../components/Icon";
+import { Photo } from "../components/Photo";
+import { BASE } from "../base";
+
+/**
+ * Only facts confirmed in PRODUCT.md. The reference's "high quality", "fast delivery" and "produced in Europe"
+ * claims are withheld until the client confirms them.
+ */
+const facts: { icon: IconName; label: string }[] = [
+  { icon: "pin", label: "Made in Osby, Sweden" },
+  { icon: "list", label: "Swedish, Norwegian and Finnish award terms" },
+  { icon: "phone", label: "Design help by phone or email" },
+];
+
+/**
+ * Hero: a full-bleed photograph (a horse wearing a rosette, from intersilvi.com). From the lg breakpoint the text
+ * sits on the navy at the left; below it the photo stacks above a solid navy panel so nothing covers the rosette.
+ * The two journey actions are the same size and sit side by side: gold for design, white for shop.
+ */
+export function HeroSection() {
+  return (
+    <section id="hero" aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-b-navy-deep pb-16 lg:pb-28">
+      <div className="relative aspect-[2/1] w-full sm:aspect-[5/2] lg:absolute lg:inset-y-0 lg:left-[30%] lg:right-0 lg:aspect-auto lg:w-auto">
+        <Photo asset={media.heroHorseRosette} sizes="100vw" priority position="50% 40%" />
+        <div aria-hidden="true" className="absolute inset-0 hidden bg-gradient-to-r from-b-navy-deep via-b-navy-deep/70 via-8% to-transparent to-45% lg:block" />
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-b-navy-deep to-transparent lg:hidden" />
+      </div>
+
+      <div className="b-container relative z-[1] -mt-8 lg:mt-0 lg:flex lg:min-h-[min(41rem,calc(100svh-9rem))] lg:items-center lg:py-14">
+        <div className="max-w-[40rem] text-b-on-navy lg:max-w-[min(36rem,42vw)]">
+          <h1 className="b-display text-b-display-2 [text-wrap:balance]">
+            {hero.titleLines[0]}
+            <span className="mt-3 block text-b-display-3 font-medium italic text-b-on-navy-2 lg:mt-4">{hero.titleLines[1]}</span>
+          </h1>
+          <p className="mt-6 max-w-[46ch] text-b-lead text-b-on-navy-2">{hero.intro}</p>
+          <div className="mt-8 grid gap-3 sm:grid-cols-2 sm:gap-4">
+            <ButtonLink href={`${BASE}/design-your-own`} variant="design">
+              {hero.design.label}
+            </ButtonLink>
+            <ButtonLink href={hero.shop.href} variant="shop-light">
+              {hero.shop.label}
+            </ButtonLink>
+          </div>
+          <ul className="mt-9 grid gap-x-8 gap-y-3 text-b-small text-b-on-navy sm:grid-cols-[repeat(3,auto)] sm:justify-start">
+            {facts.map((f) => (
+              <li key={f.label} className="flex items-center gap-2.5">
+                <Icon name={f.icon} size={18} className="flex-none text-b-yellow" />
+                {f.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}

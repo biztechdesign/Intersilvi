@@ -1,0 +1,35 @@
+import { story } from "@/content/homepage";
+import { Icon, type IconName } from "../components/Icon";
+import { PendingFact } from "../components/PendingFact";
+
+const icons: IconName[] = ["pin", "list", "phone"];
+
+/** Our story: the founding wording is unconfirmed, so it renders with a "To confirm" tag. Proof points use confirmed facts only. */
+export function StorySection() {
+  return (
+    <section aria-labelledby="story-title" className="bg-b-navy py-b-section text-b-on-navy">
+      <div className="b-container grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+        <div className="grid content-start gap-5">
+          <h2 id="story-title" className="b-display max-w-[16ch] text-b-display-2">
+            {story.title}
+          </h2>
+          <p className="text-b-lead text-b-yellow">
+            <PendingFact fact={story.founded} tone="dark" />
+          </p>
+          <p className="max-w-[44ch] text-b-lead text-b-on-navy-2">{story.body}</p>
+        </div>
+        <ul className="grid gap-4 sm:grid-cols-3">
+          {story.proofPoints.map((p, i) => (
+            <li key={p.title} className="grid content-start gap-3 rounded-b-card bg-b-navy-deep p-6">
+              <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-full bg-b-yellow text-b-navy-deep">
+                <Icon name={icons[i] ?? "pin"} size={20} />
+              </span>
+              <h3 className="text-b-lead font-semibold">{p.title}</h3>
+              <p className="text-b-small text-b-on-navy-2">{p.body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}

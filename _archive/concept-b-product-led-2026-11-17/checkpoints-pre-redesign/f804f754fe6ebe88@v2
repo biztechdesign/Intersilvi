@@ -1,0 +1,45 @@
+import Link from "next/link";
+import { events } from "@/content/homepage";
+import { media } from "@/content/media";
+import { rebase } from "@/lib/content/paths";
+import { Icon } from "../components/Icon";
+import { Photo } from "../components/Photo";
+import { BASE } from "../base";
+
+/** Shop by event: four tall photo cards. Every card is a single link; the photo zooms slightly on hover. */
+export function EventsSection() {
+  return (
+    <section id="shop" aria-labelledby="events-title" className="scroll-mt-24 py-b-section">
+      <div className="b-container">
+        <div className="max-w-[40rem]">
+          <h2 id="events-title" className="b-h2">
+            Find the right awards for your event
+          </h2>
+        </div>
+        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+          {events.map((e) => (
+            <li key={e.id}>
+              <Link
+                href={rebase(e.href, BASE)}
+                className="group relative isolate block aspect-[4/5] overflow-hidden rounded-b-card bg-b-navy-deep text-b-on-navy no-underline shadow-b-card focus-visible:shadow-none"
+              >
+                <div className="absolute inset-0 transition-transform duration-500 ease-b-out group-hover:scale-105">
+                  <Photo asset={media[e.media]} sizes="(min-width: 64rem) 23vw, (min-width: 40rem) 46vw, 100vw" position={e.position} creditPosition="top-left" />
+                </div>
+                <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-b-navy-deep via-b-navy-deep/40 via-45% to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 grid gap-2 p-5 sm:p-6">
+                  <h3 className="b-display text-b-display-3 leading-tight">{e.title}</h3>
+                  <p className="text-b-small text-b-on-navy-2">{e.body}</p>
+                  <span className="mt-1 inline-flex items-center gap-2 text-b-small font-semibold text-b-yellow">
+                    {e.actionLabel}
+                    <Icon name="arrow-right" size={16} className="transition-transform duration-300 ease-b-out group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}

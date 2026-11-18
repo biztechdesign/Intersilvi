@@ -1,0 +1,40 @@
+import { aboutCopy as about, eyebrows } from "@/content/concept-b";
+import { Eyebrow } from "../components/Eyebrow";
+import { rebase } from "@/lib/content/paths";
+import { media } from "@/content/media";
+import { ButtonLink } from "../components/Button";
+import { Photo } from "../components/Photo";
+import { BASE } from "../base";
+
+/**
+ * About us: an editorial two-column section. The workshop photograph sits on the left, and the label, title, short story
+ * and action on the right, so it reads differently from the centred craftsmanship section above. Stacks below 1024px (text first, then photo).
+ * Copy comes from `aboutCopy` in src/content/concept-b.ts (supplied by the client, including "since 1992").
+ * The photo is a provisional stock image of ribbon spools; replace it with a photo of the Osby workshop.
+ */
+export function AboutSection() {
+  return (
+    <section id="about" aria-labelledby="about-title" className="bg-surface py-section">
+      <div className="ds-container">
+        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,8fr)_minmax(0,5fr)] lg:gap-12">
+          <div data-stagger="" className="lg:order-2">
+            <Eyebrow className="!mb-2">{eyebrows.about}</Eyebrow>
+            <p className="mb-3 text-body-sm text-fg-muted">Osby, Sweden · Since 1992</p>
+            <h2 id="about-title" className="max-w-[16ch] text-h2">
+              {about.title}
+            </h2>
+            <p className="mt-5 max-w-[46ch] text-lead text-fg-secondary">{about.body}</p>
+            <div className="mt-7">
+              <ButtonLink href={rebase(about.action.href, BASE)} variant="shop">
+                {about.action.label}
+              </ButtonLink>
+            </div>
+          </div>
+          <div data-reveal="fade" className="relative aspect-[4/3] overflow-hidden rounded-lg lg:order-1 lg:aspect-[4/3]">
+            <Photo asset={media.workshopRosette} sizes="(min-width: 64rem) 55vw, 100vw" position="62% 70%" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

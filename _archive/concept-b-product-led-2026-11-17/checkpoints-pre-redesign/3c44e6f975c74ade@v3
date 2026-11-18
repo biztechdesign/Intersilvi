@@ -1,0 +1,100 @@
+import Link from "next/link";
+import type { Market } from "@/lib/commerce/types";
+import type { Link as NavLink, NavGroup } from "@/lib/content/types";
+import { contact } from "@/content/site";
+import { ButtonLink } from "./Button";
+import { Icon } from "./Icon";
+import { Logo } from "./Logo";
+import { MarketSwitcher } from "./MarketSwitcher";
+import { MobileMenu } from "./MobileMenu";
+import { PrimaryNav } from "./PrimaryNav";
+import { QuickOrder } from "./QuickOrder";
+import { SearchForm } from "./SearchForm";
+
+interface SiteHeaderProps {
+  markets: Market[];
+  nav: NavGroup[];
+  utility: NavLink[];
+  base: string;
+}
+
+/**
+ * Navy utility bar plus a sticky white header. "Design your own" is a gold pill beside search on desktop,
+ * so both journeys are top-level; the ranges sit in the nav row below. Unconfirmed trust claims from the
+ * reference stay out until the client confirms them.
+ */
+export function SiteHeader({ markets, nav, utility, base }: SiteHeaderProps) {
+  const utilityLink = "inline-flex min-h-11 items-center gap-1.5 whitespace-nowrap no-underline hover:underline";
+  const rangeNav = nav.filter((g) => g.id !== "design");
+  return (
+    <>
+      <div className="bg-b-navy-deep text-b-label text-b-on-navy-2">
+        <div className="b-container flex min-h-11 items-center justify-between gap-4">
+          <ul className="flex items-center gap-5">
+            <li>
+              <a href={contact.phoneHref} className={`${utilityLink} text-b-on-navy`}>
+                <Icon name="phone" size={15} />
+                <span className="tabular">{contact.phoneDisplay}</span>
+              </a>
+            </li>
+            <li className="hidden sm:block">
+              <a href={`mailto:${contact.email}`} className={utilityLink}>
+                <Icon name="mail" size={15} />
+                {contact.email}
+              </a>
+            </li>
+          </ul>
+          <div className="flex items-center gap-5 text-b-on-navy">
+            <span className="hidden sm:inline-flex">
+              <QuickOrder />
+            </span>
+            <ul className="hidden items-center gap-5 text-b-on-navy-2 lg:flex">
+              {utility.map((l) => (
+                <li key={l.label}>
+                  <Link href={l.href} className={utilityLink}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <MarketSwitcher markets={markets} />
+          </div>
+        </div>
+      </div>
+
+      <header className="sticky top-0 z-b-header border-b border-b-rule bg-b-paper">
+        <div className="b-container grid grid-cols-[auto_auto_1fr] items-center gap-x-2 pb-3 pt-2 [grid-template-areas:'menu_logo_actions''search_search_search'] lg:grid-cols-[auto_minmax(14rem,32rem)_auto] lg:justify-between lg:gap-x-8 lg:pb-0 lg:pt-3 lg:[grid-template-areas:'logo_search_actions''nav_nav_nav'] xl:grid-cols-[auto_minmax(0,1fr)_minmax(11rem,15rem)_auto] xl:justify-normal xl:gap-x-6 xl:py-2 xl:[grid-template-areas:'logo_nav_search_actions']">
+          <div className="flex [grid-area:menu] lg:hidden">
+            <MobileMenu groups={nav} utility={utility} markets={markets} />
+          </div>
+          <div className="flex [grid-area:logo]">
+            <Logo base={base} />
+          </div>
+          <div className="mt-2 w-full [grid-area:search] lg:mt-0">
+            <SearchForm id="header-search" />
+          </div>
+          <div className="[grid-area:nav] xl:justify-self-center">
+            <PrimaryNav groups={rangeNav} />
+          </div>
+          <div className="flex items-center justify-self-end [grid-area:actions] lg:gap-3">
+            <ButtonLink href={`${base}/design-your-own`} variant="design" arrow={false} className="hidden min-h-11 px-5 lg:inline-flex">
+              Design your own
+            </ButtonLink>
+            <Link href={`${base}/account`} aria-label="Log in" className="group inline-flex min-h-11 min-w-11 items-center justify-center gap-2 text-b-small font-medium no-underline">
+              <Icon name="user" size={22} />
+            </Link>
+            <Link href={`${base}/cart`} className="group inline-flex min-h-11 min-w-11 items-center justify-center gap-2 text-b-small font-medium no-underline">
+              <span className="relative inline-grid">
+                <Icon name="bag" size={22} />
+                <span aria-hidden="true" className="tabular absolute -right-1.5 -top-1.5 h-[1.1rem] min-w-[1.1rem] rounded-full bg-b-yellow px-1 text-center text-[0.625rem] font-bold leading-[1.1rem] text-b-navy-deep">
+                  0
+                </span>
+              </span>
+              <span className="sr-only">Cart, 0 items</span>
+            </Link>
+          </div>
+        </div>
+      </header>
+    </>
+  );
+}

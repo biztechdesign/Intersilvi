@@ -1,0 +1,34 @@
+import { craft } from "@/content/homepage";
+import { media } from "@/content/media";
+import { rebase } from "@/lib/content/paths";
+import { ButtonLink } from "../components/Button";
+import { Photo } from "../components/Photo";
+import { BASE } from "../base";
+
+/** Craftsmanship: a full-bleed workshop-themed photo (provisional) with a navy veil. Claims are limited to confirmed facts. */
+export function CraftSection() {
+  return (
+    <section id="craft" aria-labelledby="craft-title" className="relative isolate scroll-mt-24 overflow-hidden bg-b-navy-deep text-b-on-navy">
+      <div className="absolute inset-0">
+        <Photo asset={media.ribbonPile} sizes="100vw" position="50% 50%" creditPosition="bottom-right" />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-b-navy-deep via-b-navy-deep/85 via-45% to-b-navy-deep/30" />
+      </div>
+      <div className="b-container relative py-b-section">
+        <div className="max-w-[36rem]">
+          <h2 id="craft-title" className="b-display text-b-display-2">
+            {craft.titleLines[0]}
+            <span className="block text-b-yellow">{craft.titleLines[1]}</span>
+          </h2>
+          <div className="mt-6 grid gap-4 text-b-lead text-b-on-navy-2">
+            {craft.paragraphs.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+          </div>
+          <ButtonLink href={rebase(craft.action.href, BASE)} variant="shop-light" className="mt-8">
+            Discover our craftsmanship
+          </ButtonLink>
+        </div>
+      </div>
+    </section>
+  );
+}
