@@ -46,6 +46,8 @@ const SYMBOLS = {
   clock: "schedule",
   chat: "chat_bubble",
   image: "image",
+  eye: "visibility",
+  "eye-off": "visibility_off",
 } as const;
 
 export type IconName = keyof typeof SYMBOLS;

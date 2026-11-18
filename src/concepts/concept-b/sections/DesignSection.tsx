@@ -8,14 +8,15 @@ import { BASE } from "../base";
 
 /**
  * Design your own: the introduction on the left and a five-step rosette builder with a live preview on the right.
+ * The intro is top-aligned (fixed offset) so it never shifts when the builder changes height between steps.
  * The builder is a preview of the designer: it never prices, saves or adds to a cart, and its last step hands the
  * choices to the designer as query parameters.
  */
 export function DesignSection({ colours }: { colours: RibbonColour[] }) {
   return (
     <section id="design" aria-labelledby="design-title" className="scroll-mt-24 bg-surface py-section">
-      <div className="ds-container grid items-center gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,17fr)] lg:gap-12">
-        <div data-stagger="" className="grid content-start justify-items-start gap-6">
+      <div className="ds-container grid items-start gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,17fr)] lg:gap-12">
+        <div data-stagger="" className="grid content-start justify-items-start gap-6 lg:pt-12">
           <div>
             <Eyebrow>{eyebrows.design}</Eyebrow>
             <h2 id="design-title" className="text-h2 max-w-[14ch]">

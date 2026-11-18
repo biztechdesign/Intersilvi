@@ -31,7 +31,7 @@ export const media = {
     sourceUrl: "Supplied by the client for Concept B (2026-11-18)",
   },
   workshopRosette: {
-    src: "/images/concept-b/workshop-rosette.webp",
+    src: "/images/concept-b/workshop-rosette-2.webp",
     alt: "A craftsman in a leather apron shaping a blue and yellow rosette by hand, surrounded by ribbon spools",
     origin: "client",
     sourceUrl: "Supplied by the client for Concept B (2026-11-18)",

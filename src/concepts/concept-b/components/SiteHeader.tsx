@@ -109,7 +109,7 @@ export function SiteHeader({ markets, nav, utility, base, cartCount = 0 }: SiteH
               </ButtonLink>
             </li>
             <li>
-              <Link href={`${base}/account`} className={actionClass}>
+              <Link href={`${base}/account/login`} className={actionClass}>
                 <Icon name="user" size={24} />
                 <span className="hidden lg:inline">Log in</span>
                 <span className="sr-only lg:hidden">Log in</span>

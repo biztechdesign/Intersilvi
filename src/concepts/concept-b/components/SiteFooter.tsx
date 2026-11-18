@@ -8,7 +8,7 @@ import { ButtonLink, Icon, type IconName } from "@/design-system";
 import { BASE } from "../base";
 
 /** Client-supplied logo (transparent, cropped to the artwork, 640px wide for 2x). The original is kept beside it as logo-silvi-original.webp. */
-const footerLogo = { src: "/images/concept-b/logo-silvi.webp", width: 640, height: 349 };
+const footerLogo = { src: "/images/concept-b/logo-silvi-footer.webp", width: 900, height: 510 };
 import { FooterNewsletter } from "./FooterNewsletter";
 import { media } from "@/content/media";
 import { awardCategories } from "../awardCategories";
@@ -72,7 +72,7 @@ export function SiteFooter() {
         <div data-stagger="" className="grid grid-cols-2 gap-x-6 gap-y-10 py-12 sm:gap-x-8 lg:grid-cols-[minmax(0,1.35fr)_repeat(3,minmax(0,1fr))_minmax(0,1.5fr)] lg:py-0">
           <div className="col-span-2 grid content-start gap-5 lg:col-span-1 lg:py-14">
             <Link href={BASE} aria-label={`${f.brandName}, home`} className="inline-flex w-fit">
-              <Image src={footerLogo.src} alt="" width={footerLogo.width} height={footerLogo.height} className="h-14 w-auto" />
+              <Image src={footerLogo.src} alt="" width={footerLogo.width} height={footerLogo.height} className="h-24 w-auto" />
             </Link>
             <p className="max-w-[32ch] text-body-sm leading-relaxed text-fg-inverse-muted">{f.description}</p>
             <ul className="flex gap-3" aria-label="Social media">

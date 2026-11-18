@@ -100,7 +100,7 @@ export function MobileMenu({ groups, utility, markets }: MobileMenuProps) {
 
           <div className="grid">
             <QuickOrder variant="drawer" />
-            <Link href="/concept-b/account" onClick={close} className="flex min-h-12 items-center gap-3 no-underline">
+            <Link href="/concept-b/account/login" onClick={close} className="flex min-h-12 items-center gap-3 no-underline">
               <Icon name="user" size={18} />
               Log in or create account
             </Link>

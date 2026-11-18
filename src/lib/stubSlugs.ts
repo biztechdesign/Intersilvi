@@ -22,5 +22,9 @@ export function stubSlugs(): { slug: string[] }[] {
     const text = readFileSync(file, "utf8");
     for (const m of text.matchAll(re)) found.add(m[1]!);
   }
+  /* Linked from the auth forms through AUTH_ROUTES. */
+  found.add("account/forgot-password");
+  /* Routes with their own page. */
+  for (const own of ["account/login", "account/register"]) found.delete(own);
   return [...found].map((s) => ({ slug: s.split("/") }));
 }

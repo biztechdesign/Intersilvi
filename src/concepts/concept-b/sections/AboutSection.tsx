@@ -19,7 +19,18 @@ export function AboutSection() {
         <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,8fr)_minmax(0,5fr)] lg:gap-12">
           <div data-stagger="" className="lg:order-2">
             <Eyebrow className="!mb-2">{eyebrows.about}</Eyebrow>
-            <p className="mb-3 text-body-sm text-fg-muted">Osby, Sweden · Since 1992</p>
+            {/* Heritage signature: Swedish flag, place, a hairline, then the founding year in bold. */}
+            <p className="mb-4 inline-flex items-center gap-3 rounded-full border border-line bg-surface-alt py-1.5 pl-3 pr-4 text-body-sm text-fg-secondary">
+              <svg aria-hidden="true" width="24" height="16" viewBox="0 0 24 16" className="flex-none rounded-[3px]">
+                <rect width="24" height="16" fill="#006AA7" />
+                <rect x="7" width="3.5" height="16" fill="#FECC02" />
+                <rect y="6.25" width="24" height="3.5" fill="#FECC02" />
+              </svg>
+              <span className="font-medium">Osby, Sweden</span>
+              <span aria-hidden="true" className="h-4 w-px bg-line-strong" />
+              <span className="sr-only">,</span>
+              <span className="ds-numeric font-bold text-fg">Since 1992</span>
+            </p>
             <h2 id="about-title" className="max-w-[16ch] text-h2">
               {about.title}
             </h2>
