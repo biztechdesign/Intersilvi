@@ -7,7 +7,7 @@ import { BASE } from "../base";
 /**
  * Stock compared with custom delivery times: one plain white card that straddles the hero's
  * bottom edge and the next section: the band behind it is transparent over the hero and the next section's white below it,
- * so no gap shows between them. It leads with the two lead times (large figures); the title cell is a quiet label. Each lane is an icon and title, the figure on one line ("7 working days") and a text link. Both lanes use
+ * so no gap shows between them. It leads with the two lead times (clear figures); the title cell is a quiet label. Each lane is an icon and title, the figure on one line ("7 working days") and a text link. Both lanes use
  * text links, so the page keeps its single accent action per view (header and hero already carry it).
  * Static baseline only: the event-date planner (OPT-2) and order-by board (OPT-3) are not approved.
  */
@@ -36,7 +36,7 @@ export function DeliverySection() {
                     <Icon name={lt.id === "custom" ? "pen" : "box"} size={18} className="flex-none text-brand-navy" />
                     {lt.title}
                   </h3>
-                  <p className="tabular text-h2 font-bold leading-tight text-fg">
+                  <p className="tabular text-h3 font-bold leading-tight text-fg">
                     {figure} {unitText}
                   </p>
                   <ButtonLink href={rebase(lt.action.href, BASE)} variant="text" className="mt-1 justify-self-start">
