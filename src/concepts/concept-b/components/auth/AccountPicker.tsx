@@ -79,8 +79,9 @@ export function AccountPicker({ onSelected }: { onSelected: (account: LinkedAcco
           </ul>
         )}
         {error ? <Alert tone="error">{error}</Alert> : null}
-        <Alert tone="info" title="Your selected account determines which orders, payments and saved logos you can access.">
-          You can switch accounts later from My account.
+        <Alert tone="info">
+          <span className="block text-body-sm font-semibold text-status-info">Your selected account determines which orders, payments and saved logos you can access.</span>
+          <span className="mt-0.5 block text-label font-normal text-status-info">You can switch accounts later from My account.</span>
         </Alert>
       </div>
     </Dialog>
