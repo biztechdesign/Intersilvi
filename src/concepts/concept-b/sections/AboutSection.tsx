@@ -5,6 +5,7 @@ import { media } from "@/content/media";
 import { ButtonLink } from "../components/Button";
 import { Photo } from "../components/Photo";
 import { BASE } from "../base";
+import { motionClass } from "@/design-system/motion-classes";
 
 /**
  * About us: an editorial two-column section. The workshop photograph sits on the left, and the label, title, short story
@@ -41,8 +42,8 @@ export function AboutSection() {
               </ButtonLink>
             </div>
           </div>
-          <div data-reveal="fade" className="relative aspect-[4/3] overflow-hidden rounded-lg md:order-1 md:aspect-[4/5] lg:aspect-[4/3]">
-            <Photo asset={media.workshopRosette} sizes="(min-width: 64rem) 55vw, 100vw" position="62% 70%" />
+          <div data-reveal="fade" className="group relative aspect-[4/3] overflow-hidden rounded-lg md:order-1 md:aspect-[4/5] lg:aspect-[4/3]">
+            <Photo asset={media.workshopRosette} sizes="(min-width: 64rem) 55vw, 100vw" position="62% 70%" className={motionClass.mediaZoom} />
           </div>
         </div>
       </div>

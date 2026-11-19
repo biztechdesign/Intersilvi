@@ -11,7 +11,7 @@ import { dsFontVariables } from "@/design-system/fonts";
 import { RevealObserver } from "@/design-system/components/Motion";
 
 export const metadata: Metadata = {
-  title: "Concept B: Refined contemporary commerce",
+  title: { default: "Intersilvi", template: "%s · Intersilvi" },
 };
 
 export default async function ConceptBLayout({ children }: { children: ReactNode }) {

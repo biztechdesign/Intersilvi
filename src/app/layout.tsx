@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: "Intersilvi redesign prototypes", template: "%s · Intersilvi prototype" },
+  title: { default: "Intersilvi", template: "%s · Intersilvi" },
   description: "Homepage concept prototypes for the Intersilvi redesign.",
   robots: { index: false, follow: false },
 };

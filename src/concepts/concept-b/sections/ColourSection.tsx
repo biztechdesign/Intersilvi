@@ -4,6 +4,7 @@ import { rebase } from "@/lib/content/paths";
 import { ButtonLink } from "../components/Button";
 import { SectionHeader } from "../components/SectionHeader";
 import { BASE } from "../base";
+import { motionClass } from "@/design-system/motion-classes";
 
 /**
  * Colour inspiration: heading on the left, intro and the colour-chart action on the right, then a light ribbon gallery.
@@ -34,9 +35,9 @@ export function ColourSection() {
       >
         {colourCopy.ribbons.map((r) => (
           <li key={r.id} className={`w-[40vw] max-w-[11rem] flex-none snap-start sm:w-44 lg:w-auto lg:max-w-none`}>
-            <figure className="overflow-hidden rounded-lg bg-surface">
+            <figure className="group overflow-hidden rounded-lg bg-surface">
               <div className="relative aspect-[6/5]">
-                <Image src={r.src} alt={`${r.name} satin ribbon`} fill sizes="(min-width: 64rem) 14vw, 11rem" className="object-cover object-[50%_58%]" />
+                <Image src={r.src} alt={`${r.name} satin ribbon`} fill sizes="(min-width: 64rem) 14vw, 11rem" className={`object-cover object-[50%_58%] ${motionClass.mediaZoom}`} />
               </div>
               <figcaption className="border-t border-line px-3 py-2 text-center text-body-sm font-semibold text-fg">{r.name}</figcaption>
             </figure>
