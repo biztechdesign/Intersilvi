@@ -4,12 +4,13 @@ import type { Market } from "@/lib/commerce/types";
 import type { Link as NavLink, NavGroup } from "@/lib/content/types";
 import { brandLogo } from "@/content/media";
 import { contact } from "@/content/site";
-import { ButtonLink, Dropdown, Icon } from "@/design-system";
+import { ButtonLink, Icon } from "@/design-system";
 import { headerNav } from "../headerNav";
 import { StickyHeader } from "./StickyHeader";
 import { MobileMenu } from "./MobileMenu";
 import { PrimaryNav } from "./PrimaryNav";
 import { QuickOrder } from "./QuickOrder";
+import { LocaleSwitcher } from "./LocaleSwitcher";
 import { SearchForm } from "./SearchForm";
 
 interface SiteHeaderProps {
@@ -19,13 +20,15 @@ interface SiteHeaderProps {
   base: string;
   /** Items in the cart. The prototype has no cart state yet, so the layout passes 0. */
   cartCount?: number;
+  /** Signed-in customer's first name. Omit for a guest: the account action then reads "Log in". */
+  customerName?: string;
 }
 
 const utilityLinkClass =
   "inline-flex min-h-12 items-center whitespace-nowrap text-body-sm font-medium text-fg-inverse no-underline transition-colors duration-fast ease-standard hover:text-brand-yellow";
 
 const actionClass =
-  "group relative inline-flex min-h-12 min-w-12 items-center justify-center gap-2 rounded-md px-2.5 text-body font-medium text-fg no-underline transition-colors duration-fast ease-standard hover:bg-surface-alt";
+  "group relative inline-flex min-h-12 min-w-11 items-center justify-center gap-2 rounded-md px-2 text-nav text-fg no-underline transition-colors duration-fast ease-standard hover:bg-surface-soft active:bg-surface-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
 /**
  * Concept B header: three tiers on desktop, composed from shared design-system parts (ButtonLink, Dropdown, Icon) and
@@ -40,12 +43,12 @@ const actionClass =
  * Rows 2 and 3 stick together as frosted glass once stuck (StickyHeader); the sticky header slides away on scroll up and returns on scroll down. Below 1024px the third row becomes the drawer, the
  * account and cart stay in the bar, and below 768px the search drops to its own line so nothing overlaps.
  */
-export function SiteHeader({ markets, nav, utility, base, cartCount = 0 }: SiteHeaderProps) {
+export function SiteHeader({ markets, nav, utility, base, cartCount = 0, customerName }: SiteHeaderProps) {
   const groups = headerNav(nav, base);
   return (
     <>
       {/* Row 1: utility bar */}
-      <div className="ds-inverse bg-surface-inverse text-fg-inverse">
+      <div className="ds-inverse relative z-[45] bg-surface-inverse text-fg-inverse">
         <div className="ds-container flex min-h-12 items-stretch justify-between gap-4">
           <div className="flex items-center gap-6 lg:gap-8">
             <a href={contact.phoneHref} className={`ds-numeric gap-2 ${utilityLinkClass}`}>
@@ -72,13 +75,7 @@ export function SiteHeader({ markets, nav, utility, base, cartCount = 0 }: SiteH
               ))}
             </ul>
             <span className="flex items-center border-l border-fg-inverse/25">
-              <Dropdown
-                label="Language and market"
-                icon="globe"
-                tone="dark"
-                value="com"
-                options={markets.map((m) => ({ value: m.code, label: m.label, hint: m.domain }))}
-              />
+              <LocaleSwitcher markets={markets} />
             </span>
           </div>
         </div>
@@ -102,31 +99,41 @@ export function SiteHeader({ markets, nav, utility, base, cartCount = 0 }: SiteH
             <SearchForm id="header-search" size="lg" />
           </div>
 
-          <ul className="flex items-center justify-end gap-0 [grid-area:actions] lg:gap-3">
-            <li className="hidden md:block">
+          <ul className="flex items-center justify-end gap-0 [grid-area:actions] lg:gap-1">
+            <li className="hidden md:block md:mr-2">
               <ButtonLink href={`${base}/design-your-own`} variant="accent" size="md">
                 Design your own
               </ButtonLink>
             </li>
             <li>
-              <Link href={`${base}/account/login`} className={actionClass}>
-                <Icon name="user" size={24} />
-                <span className="hidden lg:inline">Log in</span>
-                <span className="sr-only lg:hidden">Log in</span>
+              <Link href={`${base}/wishlist`} className={actionClass}>
+                <Icon name="heart" size={22} />
+                <span className="hidden lg:inline">Wishlist</span>
+                <span className="sr-only lg:hidden">Wishlist</span>
               </Link>
             </li>
             <li>
-              <Link href={`${base}/cart`} className={`${actionClass} lg:gap-3.5`}>
+              <Link href={customerName ? `${base}/account` : `${base}/account/login`} className={actionClass}>
+                <Icon name="user" size={22} />
+                <span className="hidden max-w-[10ch] truncate lg:inline">{customerName ?? "Log in"}</span>
+                <span className="sr-only lg:hidden">{customerName ? `My account, ${customerName}` : "Log in"}</span>
+              </Link>
+            </li>
+            <li>
+              <Link href={`${base}/cart`} className={actionClass}>
                 <span className="relative inline-grid">
-                  <Icon name="bag" size={24} />
-                  <span aria-hidden="true" className="ds-numeric absolute -right-3 -top-2.5 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-action-accent px-1 text-xs font-bold leading-none text-fg-on-accent ring-2 ring-surface">
-                    {cartCount}
+                  <Icon name="bag" size={22} />
+                  <span
+                    aria-hidden="true"
+                    className="ds-numeric absolute -right-2.5 -top-2 grid h-[18px] min-w-[18px] place-items-center rounded-full bg-action-accent px-1 text-xs font-bold leading-none text-fg-on-accent ring-2 ring-surface"
+                  >
+                    {cartCount > 99 ? "99+" : cartCount}
                   </span>
                 </span>
-                <span className="hidden lg:inline">Cart</span>
+                <span className="hidden lg:ml-2 lg:inline">Cart</span>
                 <span className="sr-only">
                   <span className="lg:hidden">Cart, </span>
-                  {cartCount} items
+                  {cartCount} {cartCount === 1 ? "item" : "items"}
                 </span>
               </Link>
             </li>

@@ -84,6 +84,13 @@ export function FileUpload({ id, label, accept, help, maxSizeMb = 10, onFile }: 
   const [error, setError] = useState("");
 
   function pick(f: File | null) {
+    const allowed = accept?.split(",").map((s) => s.trim().toLowerCase()).filter((s) => s.startsWith("."));
+    if (f && allowed?.length && !allowed.some((ext) => f.name.toLowerCase().endsWith(ext))) {
+      setError(`${f.name} isn't a supported file type. Use ${allowed.join(", ")}.`);
+      setFile(null);
+      onFile?.(null);
+      return;
+    }
     if (f && f.size > maxSizeMb * 1024 * 1024) {
       setError(`${f.name} is larger than ${maxSizeMb} MB. Choose a smaller file.`);
       setFile(null);
@@ -96,7 +103,7 @@ export function FileUpload({ id, label, accept, help, maxSizeMb = 10, onFile }: 
   }
 
   return (
-    <div className="grid gap-1.5">
+    <div className="group/upload grid gap-1.5">
       <span id={`${inputId}-label`} className="text-label text-fg">
         {label}
       </span>
@@ -109,6 +116,10 @@ export function FileUpload({ id, label, accept, help, maxSizeMb = 10, onFile }: 
             <span className="block truncate text-body-sm font-semibold text-fg">{file.name}</span>
             <span className="ds-numeric block text-caption text-fg-muted">{(file.size / 1024).toFixed(0)} KB</span>
           </span>
+          <label htmlFor={inputId} className="inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-sm px-2 text-body-sm font-semibold text-fg-link hover:bg-surface-soft group-has-[input:focus-visible]/upload:outline group-has-[input:focus-visible]/upload:outline-2 group-has-[input:focus-visible]/upload:outline-focus">
+            <Icon name="rotate" size={16} />
+            Replace
+          </label>
           <button
             type="button"
             onClick={() => {
@@ -124,7 +135,12 @@ export function FileUpload({ id, label, accept, help, maxSizeMb = 10, onFile }: 
       ) : (
         <label
           htmlFor={inputId}
-          className="flex cursor-pointer flex-col items-center gap-2 rounded-md border-[1.5px] border-dashed border-line-input bg-surface-alt px-6 py-8 text-center transition-colors duration-fast hover:border-fg-secondary hover:bg-surface-soft has-[:focus-visible]:border-focus has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-focus"
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => {
+            e.preventDefault();
+            pick(e.dataTransfer.files?.[0] ?? null);
+          }}
+          className="flex cursor-pointer flex-col items-center gap-2 rounded-md border-[1.5px] border-dashed border-line-input bg-surface-alt px-6 py-8 text-center transition-colors duration-fast hover:border-fg-secondary hover:bg-surface-soft group-has-[input:focus-visible]/upload:border-focus group-has-[input:focus-visible]/upload:outline group-has-[input:focus-visible]/upload:outline-2 group-has-[input:focus-visible]/upload:outline-offset-2 group-has-[input:focus-visible]/upload:outline-focus"
         >
           <span className="grid h-10 w-10 place-items-center rounded-full bg-surface text-fg shadow-xs">
             <Icon name="upload" size={20} />
@@ -133,7 +149,9 @@ export function FileUpload({ id, label, accept, help, maxSizeMb = 10, onFile }: 
             <span className="text-fg-link underline underline-offset-[0.2em]">Choose a file</span> or drop it here
           </span>
           {help ? <span id={`${inputId}-help`} className="text-caption text-fg-muted">{help}</span> : null}
-          <input
+        </label>
+      )}
+      <input
             ref={ref}
             id={inputId}
             type="file"
@@ -143,8 +161,6 @@ export function FileUpload({ id, label, accept, help, maxSizeMb = 10, onFile }: 
             onChange={(e) => pick(e.target.files?.[0] ?? null)}
             className="sr-only"
           />
-        </label>
-      )}
       <p role="status" aria-live="polite" className="text-body-sm text-status-error empty:hidden">
         {error}
       </p>

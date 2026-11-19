@@ -25,6 +25,9 @@ export function stubSlugs(): { slug: string[] }[] {
   /* Linked from the auth forms through AUTH_ROUTES. */
   found.add("account/forgot-password");
   /* Routes with their own page. */
-  for (const own of ["account/login", "account/register", "account/choose"]) found.delete(own);
+  found.add("checkout");
+  found.add("wishlist");
+  found.add("quickorder");
+  for (const own of ["account/login", "account/register", "account/choose", "cart"]) found.delete(own);
   return [...found].map((s) => ({ slug: s.split("/") }));
 }

@@ -80,6 +80,8 @@ export interface DialogProps {
   footer?: (close: () => void) => ReactNode;
   /** "modal": centred. "drawer": slides from the right (filters, mini-cart). On phones both are full-width sheets. */
   variant?: "modal" | "drawer";
+  /** "xl": wide modal (62rem) for browse-and-preview tasks; a full-screen sheet on phones. */
+  size?: "md" | "xl";
   /** Open as soon as it mounts (for a dialog the flow opens itself, not a trigger). */
   openOnMount?: boolean;
   /** false: no close button, Escape and outside click do nothing (a step the customer must complete). Default true. */
@@ -91,7 +93,7 @@ export interface DialogProps {
  * Dialog built on native <dialog>: focus is trapped, Escape closes, focus returns to the trigger.
  * Use for tasks that need focus (Quickorder, filters on mobile); never for content that could sit inline.
  */
-export function Dialog({ title, description, trigger, children, footer, variant = "modal", openOnMount, dismissible = true, onClose }: DialogProps) {
+export function Dialog({ title, description, trigger, children, footer, variant = "modal", size = "md", openOnMount, dismissible = true, onClose }: DialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const descId = useId();
@@ -128,7 +130,7 @@ export function Dialog({ title, description, trigger, children, footer, variant 
           "max-h-[100dvh] w-full max-w-[100vw] border-0 bg-surface p-0 text-fg shadow-lg",
           drawer
             ? "m-0 ml-auto h-[100dvh] sm:w-[26rem] motion-safe:open:animate-drawer-in"
-            : "mx-auto mb-0 mt-auto rounded-t-lg sm:my-auto sm:w-[min(36rem,calc(100vw-2rem))] sm:rounded-lg open:animate-modal-in",
+            : cx("mx-auto mb-0 mt-auto rounded-t-lg sm:my-auto sm:rounded-lg open:animate-modal-in", size === "xl" ? "max-sm:h-[100dvh] max-sm:max-h-[100dvh] max-sm:rounded-none sm:w-[min(62rem,calc(100vw-2rem))] sm:max-h-[min(92dvh,52rem)]" : "sm:w-[min(36rem,calc(100vw-2rem))]"),
         )}
       >
         <div className="flex h-full max-h-[inherit] flex-col">

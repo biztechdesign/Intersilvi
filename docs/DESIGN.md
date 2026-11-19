@@ -199,7 +199,7 @@ Manrope (400–800) for navigation, headings, product cards, forms, body, prices
 - Sizes: 18px inline with text, 20px in buttons (default), 22–24px for header and trust icons. Colour comes from `currentColor`; icons are decorative unless they stand alone and carry a `label`.
 - Active or saved states use the fill axis (a pressed parent sets `--ds-icon-fill: 1`), never a second icon.
 - Material Symbols has no brand logos, so social links use generic symbols (`group`, `photo_camera`, `play_circle`) with the network named in the accessible label.
-- Product art, rosette illustrations and the logo are artwork, not icons, and are exempt.
+- Product art, rosette illustrations and the logo are artwork, not icons, and are exempt. So are third-party brand marks: country flags in the language switcher (locale codes SV, ENG, NO, DK, FI, DE) and the social network logos (Instagram, TikTok, Facebook) in the footer. They are drawn as inline SVG in `BrandMark.tsx`.
 
 ## Layout
 

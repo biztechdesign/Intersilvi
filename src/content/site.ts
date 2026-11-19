@@ -18,8 +18,8 @@ export const contact = {
 
 export const openingHours: Unconfirmed<string[]> = {
   status: "unconfirmed",
-  value: ["Mon–Thu 07.00–16.00", "Fri 07.00–14.00"],
-  note: "Live site value. The client reference shows Mon–Fri 08:00–16:00.",
+  value: ["Mon–Thu 07:00–16:00", "Friday 07:00–14:00", "Closed for holidays: Weeks 29–30"],
+  note: "Client-supplied opening hours (2026-11-19).",
 };
 
 export const catalogueLink: Link = {

@@ -11,6 +11,7 @@ import { BASE } from "../base";
 const footerLogo = { src: "/images/concept-b/logo-silvi-footer.webp", width: 900, height: 510 };
 import { FooterNewsletter } from "./FooterNewsletter";
 import { FooterColumn } from "./FooterColumn";
+import { SocialMark } from "./BrandMark";
 import { media } from "@/content/media";
 import { awardCategories } from "../awardCategories";
 
@@ -84,7 +85,7 @@ export function SiteFooter() {
                     aria-label={s.label}
                     className="grid h-11 w-11 place-items-center rounded-full bg-surface-inverse-raised text-fg-inverse transition-colors duration-fast hover:bg-action-primary-active"
                   >
-                    <Icon name={s.icon} size={18} />
+                    <SocialMark id={s.id} size={20} />
                   </Link>
                 </li>
               ))}
@@ -119,7 +120,21 @@ export function SiteFooter() {
                   {contact.email}
                 </a>
               </ContactRow>
-              <ContactRow icon="clock">{f.help.hours}</ContactRow>
+              <li className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-2">
+                <Icon name="clock" size={18} className="flex-none text-brand-yellow" />
+                <h3 className="font-semibold text-fg-inverse">{f.help.hoursTitle}</h3>
+                <div className="col-start-2 grid gap-2">
+                  <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1">
+                    {f.help.hours.map((h) => (
+                      <div key={h.days} className="contents">
+                        <dt>{h.days}</dt>
+                        <dd className="ds-numeric text-fg-inverse">{h.time}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  <p className="border-t border-line-inverse pt-2 text-caption text-fg-inverse-muted">{f.help.holidayNote}</p>
+                </div>
+              </li>
             </ul>
             <ButtonLink href={`mailto:${contact.email}`} variant="outline" inverse iconEnd="arrow-right" className="mt-6 w-full md:w-auto md:self-start lg:w-full">
               {f.help.action}

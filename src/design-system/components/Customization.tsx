@@ -55,6 +55,8 @@ export interface SwatchOption {
   hex: string;
   /** Finish named in text, e.g. "Satin", "Metallic". */
   finish?: string;
+  /** CSS background for finishes that a flat colour can't show (metallic, full colour). Overrides hex. */
+  background?: string;
   disabled?: boolean;
 }
 
@@ -62,11 +64,14 @@ export interface SwatchOption {
  * Colour / finish selector as a native radio group. Every swatch has a visible or announced name, so the
  * choice never depends on colour perception. Selected: a 2px navy ring with a white gap.
  */
-export function SwatchGroup({ name, legend, options, defaultValue, showNames = true, size = "md" }: {
+export function SwatchGroup({ name, legend, options, defaultValue, value, onChange, showNames = true, size = "md" }: {
   name: string;
   legend: string;
   options: SwatchOption[];
   defaultValue?: string;
+  /** Controlled value. When set, the group is controlled and `onChange` receives the chosen id. */
+  value?: string;
+  onChange?: (id: string) => void;
   showNames?: boolean;
   size?: "sm" | "md";
 }) {
@@ -77,7 +82,15 @@ export function SwatchGroup({ name, legend, options, defaultValue, showNames = t
       <div className={cx("flex flex-wrap", showNames ? "gap-x-3 gap-y-4" : "gap-2")}>
         {options.map((o) => (
           <label key={o.id} className={cx("group grid justify-items-center gap-1.5 text-center", o.disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer", showNames && "w-16")}>
-            <input type="radio" name={name} value={o.id} defaultChecked={o.id === defaultValue} disabled={o.disabled} className="peer sr-only" />
+            <input
+              type="radio"
+              name={name}
+              value={o.id}
+              {...(value !== undefined ? { checked: o.id === value } : { defaultChecked: o.id === defaultValue })}
+              onChange={onChange ? () => onChange(o.id) : undefined}
+              disabled={o.disabled}
+              className="peer sr-only"
+            />
             <span
               aria-hidden="true"
               className={cx(
@@ -86,7 +99,7 @@ export function SwatchGroup({ name, legend, options, defaultValue, showNames = t
                 "peer-checked:shadow-[0_0_0_2px_rgb(var(--ds-color-surface)),0_0_0_4px_rgb(var(--ds-color-selected))]",
                 "peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-focus",
               )}
-              style={{ backgroundColor: o.hex }}
+              style={o.background ? { background: o.background } : { backgroundColor: o.hex }}
             />
             <span className={cx(showNames ? "text-caption leading-tight text-fg-secondary peer-checked:font-bold peer-checked:text-fg" : "sr-only")}>
               {o.name}

@@ -62,10 +62,10 @@ export const footerCopy = {
   brandName: "Inter Silvi",
   description: "High quality rosettes for competitions, events and special occasions. Designed by you – handmade by us in Sweden since 1992.",
   social: [
-    { icon: "facebook", label: "Facebook", href: "/concept-b/social/facebook" },
-    { icon: "instagram", label: "Instagram", href: "/concept-b/social/instagram" },
-    { icon: "youtube", label: "YouTube", href: "/concept-b/social/youtube" },
-  ] satisfies { icon: IconName; label: string; href: string }[],
+    { id: "instagram", label: "Instagram", href: "/concept-b/social/instagram" },
+    { id: "tiktok", label: "TikTok", href: "/concept-b/social/tiktok" },
+    { id: "facebook", label: "Facebook", href: "/concept-b/social/facebook" },
+  ] satisfies { id: "instagram" | "tiktok" | "facebook"; label: string; href: string }[],
   columns: [
     {
       heading: "Shop",
@@ -102,7 +102,13 @@ export const footerCopy = {
       ],
     },
   ] satisfies { heading: string; links: Link[] }[],
-  help: { title: "Need help with an order?", address: "Inter Silvi AB, Osby, Sweden", hours: "Mon–Fri 08:00–16:00", action: "Contact us" },
+  help: { title: "Need help with an order?", address: "Inter Silvi AB, Osby, Sweden", hoursTitle: "Opening hours",
+    hours: [
+      { days: "Mon–Thu", time: "07:00–16:00" },
+      { days: "Friday", time: "07:00–14:00" },
+    ],
+    holidayNote: "Closed for holidays: Weeks 29–30",
+    action: "Contact us" },
   copyright: "Inter Silvi. All rights reserved.",
   legal: [
     { label: "Privacy Policy", href: "/concept-b/privacy-policy" },

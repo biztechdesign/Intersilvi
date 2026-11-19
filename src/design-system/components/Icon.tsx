@@ -47,6 +47,8 @@ const SYMBOLS = {
   chat: "chat_bubble",
   image: "image",
   apartment: "apartment",
+  calendar: "calendar_month",
+  undo: "undo",
   eye: "visibility",
   "eye-off": "visibility_off",
 } as const;
