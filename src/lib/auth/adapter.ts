@@ -15,10 +15,9 @@ export type SignInResult = { ok: true } | { ok: false; code: "invalid_credential
 export type RegisterResult = { ok: true } | { ok: false; code: "email_exists" | "server_error" };
 
 export interface RegisterInput {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
+  customerType: "company" | "association" | "individual";
+  /** The values of the fields shown for that customer type (see lib/auth/registration.ts). */
+  values: Partial<Record<"email" | "password" | "confirm" | "firstName" | "lastName" | "phone" | "street" | "city" | "postalCode" | "country" | "region" | "vatNumber", string>>;
 }
 
 export type AccountKind = "company" | "personal";
@@ -68,9 +67,10 @@ export const authAdapter: AuthAdapter = {
     if (e.startsWith("error@")) return { ok: false, code: "server_error" };
     return accounts.get(e) === password ? { ok: true } : { ok: false, code: "invalid_credentials" };
   },
-  async register({ email, password }) {
+  async register({ values }) {
     await wait(900);
-    const e = email.trim().toLowerCase();
+    const e = (values.email ?? "").trim().toLowerCase();
+    const password = values.password ?? "";
     if (e.startsWith("error@")) return { ok: false, code: "server_error" };
     if (e === "taken@example.com" || accounts.has(e)) return { ok: false, code: "email_exists" };
     accounts.set(e, password);
