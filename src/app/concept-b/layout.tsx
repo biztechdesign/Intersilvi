@@ -9,6 +9,7 @@ import { SiteHeader } from "@/concepts/concept-b/components/SiteHeader";
 import { BASE } from "@/concepts/concept-b/base";
 import { dsFontVariables } from "@/design-system/fonts";
 import { RevealObserver } from "@/design-system/components/Motion";
+import { ReviewLinkGuard } from "@/concepts/concept-b/components/ReviewLinkGuard";
 
 export const metadata: Metadata = {
   title: { default: "Intersilvi", template: "%s · Intersilvi" },
@@ -36,6 +37,7 @@ export default async function ConceptBLayout({ children }: { children: ReactNode
       <SiteFooter />
       <HelpLauncher tone="accent" />
       <RevealObserver />
+      <ReviewLinkGuard />
     </div>
   );
 }

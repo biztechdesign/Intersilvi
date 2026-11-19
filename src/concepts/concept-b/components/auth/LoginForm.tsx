@@ -8,6 +8,7 @@ import { authAdapter } from "@/lib/auth/adapter";
 import { AUTH_ROUTES } from "@/lib/auth/config";
 import { emailError, safeNext } from "@/lib/auth/validate";
 import { BASE } from "../../base";
+import { REVIEW_MODE } from "@/lib/reviewMode";
 import { PasswordField } from "./PasswordField";
 
 type Errors = { email?: string; password?: string };
@@ -45,7 +46,7 @@ export function LoginForm() {
       const next = safeNext(new URLSearchParams(window.location.search).get("next"), BASE);
       const linked = await authAdapter.listAccounts();
       /* Several linked accounts: choose one first, then continue to the intended page. */
-      router.push(linked.length > 1 ? `${BASE}/account/choose${next ? `?next=${encodeURIComponent(next)}` : ""}` : next ?? `${BASE}${AUTH_ROUTES.account}`);
+      router.push(linked.length > 1 ? `${BASE}/account/choose${next ? `?next=${encodeURIComponent(next)}` : ""}` : next ?? (REVIEW_MODE ? BASE : `${BASE}${AUTH_ROUTES.account}`));
       return;
     }
     setPassword("");

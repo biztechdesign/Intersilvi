@@ -7,6 +7,7 @@ import type { NavGroup } from "@/lib/content/types";
 import { Icon } from "./Icon";
 import { useDismiss } from "./useDismiss";
 import { motionClass } from "@/design-system/motion-classes";
+import { MEGA_MENUS_ENABLED } from "@/lib/reviewMode";
 
 /**
  * Desktop primary navigation with mega-menu panels.
@@ -45,7 +46,7 @@ export function PrimaryNav({ groups }: { groups: NavGroup[] }) {
     <nav ref={navRef} aria-label="Main" onMouseLeave={() => hoverOpen(null)} className="hidden lg:block">
       <ul className="-mx-4 flex flex-nowrap xl:mx-0 justify-between gap-x-1 xl:gap-x-4 [&>li]:shrink-0">
         {groups.map((g) => {
-          const hasPanel = g.columns.length > 0;
+          const hasPanel = MEGA_MENUS_ENABLED && g.columns.length > 0;
           const open = openId === g.id;
           const panelId = `mega-${g.id}`;
           return (
@@ -58,6 +59,8 @@ export function PrimaryNav({ groups }: { groups: NavGroup[] }) {
               ) : (
                 <Link href={g.href} data-active={isActive(g.href)} aria-current={isActive(g.href) ? "page" : undefined} className={`${link} ${g.id === "sale" ? "!font-bold" : ""}`}>
                   {g.label}
+                  {/* Review mode: the menu panel is off, but items that have one keep their arrow. */}
+                  {g.columns.length > 0 ? <Icon name="chevron-down" size={14} className="text-fg-muted" /> : null}
                 </Link>
               )}
               {hasPanel ? (
