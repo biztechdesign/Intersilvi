@@ -11,7 +11,7 @@ export const MEGA_MENUS_ENABLED = !REVIEW_MODE;
  * Pages that links may open in review mode (path after the site's base path, no trailing slash): the homepage only.
  * Cart, sign-in, registration and account selection are built and kept, but nothing links to them during review.
  */
-export const BUILT_PATHS = new Set<string>(["", "/concept-b"]);
+export const BUILT_PATHS = new Set<string>([""]);
 
 export function isBuiltPath(pathname: string, basePath = ""): boolean {
   let p = pathname;

@@ -8,7 +8,7 @@ import type { FooterColumn, Link, NavGroup } from "./types";
 const SOURCE_BASE = "/concept-a";
 
 export function rebase(href: string, base: string): string {
-  return href.startsWith(SOURCE_BASE) ? base + href.slice(SOURCE_BASE.length) : href;
+  return href.startsWith(SOURCE_BASE) ? base + href.slice(SOURCE_BASE.length) || "/" : href;
 }
 
 export const rebaseLink = (l: Link, base: string): Link => ({ ...l, href: rebase(l.href, base) });

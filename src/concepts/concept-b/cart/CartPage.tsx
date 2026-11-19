@@ -5,7 +5,7 @@ import { Alert, Button, ButtonLink, Dialog, Field, Icon, Skeleton, StateMessage,
 import { cartAdapter } from "@/lib/cart/adapter";
 import { calculateTotals } from "@/lib/cart/totals";
 import type { AppliedLogo, Cart, CartLine, DiscountState, PrintColourId } from "@/lib/cart/types";
-import { BASE } from "../base";
+import { BASE, HOME } from "../base";
 import { CartLineCard } from "./CartLineCard";
 import { CartSidebar } from "./CartSidebar";
 
@@ -172,7 +172,7 @@ export function CartPage() {
           body="Browse our rosettes, trophies and medals, or design your own rosette."
           action={
             <div className="flex flex-wrap justify-center gap-3">
-              <ButtonLink href={BASE} variant="primary">
+              <ButtonLink href={HOME} variant="primary">
                 Continue shopping
               </ButtonLink>
               <ButtonLink href={`${BASE}/design-your-own`} variant="outline">
@@ -210,7 +210,7 @@ export function CartPage() {
               ))}
             </ul>
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <ButtonLink href={BASE} variant="outline" iconStart="chevron-left">
+              <ButtonLink href={HOME} variant="outline" iconStart="chevron-left">
                 Continue shopping
               </ButtonLink>
               <Dialog

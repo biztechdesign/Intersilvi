@@ -18,7 +18,8 @@ export function ReviewLinkGuard() {
       if (raw.startsWith("#") || /^(mailto:|tel:)/i.test(raw)) return;
       const url = new URL(a.href, window.location.href);
       if (url.origin !== window.location.origin) return;
-      if (url.pathname === window.location.pathname && url.hash) return;
+      /* Same page (filters, sorting, pagination, #anchors): always allowed. */
+      if (url.pathname === window.location.pathname) return;
       if (isBuiltPath(url.pathname, base)) return;
       e.preventDefault();
       e.stopImmediatePropagation();

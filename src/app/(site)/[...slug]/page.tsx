@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/concepts/concept-b/components/Button";
-import { BASE } from "@/concepts/concept-b/base";
+import { BASE, HOME } from "@/concepts/concept-b/base";
 import { stubSlugs } from "@/lib/stubSlugs";
 import { QueryFilters } from "./QueryFilters";
 
@@ -42,7 +42,7 @@ export default async function StubPage({ params }: StubProps) {
           : "This page isn't part of the homepage prototype. The link is here so the navigation and journeys can be reviewed."}
       </p>
       <QueryFilters />
-      <ButtonLink href={BASE}>Back to the homepage</ButtonLink>
+      <ButtonLink href={HOME}>Back to the homepage</ButtonLink>
     </section>
   );
 }

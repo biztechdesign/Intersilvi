@@ -1,3 +1,4 @@
+import { horseProducts } from "@/lib/listing/mock";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
@@ -21,6 +22,8 @@ export function stubSlugs(): { slug: string[] }[] {
   for (const file of walk(join(process.cwd(), "src"))) {
     const text = readFileSync(file, "utf8");
     for (const m of text.matchAll(re)) found.add(m[1]!);
+    /* Literal site-root links in content and mock data, e.g. href: "/faq". */
+    if (/[\\/](content|lib)[\\/]/.test(file)) for (const m of text.matchAll(/href: ["`]\/([a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9-]*)*)["`]/g)) found.add(m[1]!);
   }
   /* Linked from the auth forms through AUTH_ROUTES. */
   found.add("account/forgot-password");
@@ -28,6 +31,8 @@ export function stubSlugs(): { slug: string[] }[] {
   found.add("checkout");
   found.add("wishlist");
   found.add("quickorder");
-  for (const own of ["account/login", "account/register", "account/choose", "cart"]) found.delete(own);
+  /* Product pages the horse listing links to (placeholders until the product page exists). */
+  for (const p of horseProducts) found.add(`horse-rosettes/${p.slug}`);
+  for (const own of ["account/login", "account/register", "account/choose", "cart", "horse-rosettes", "concept-a", "concept-b", "design-system"]) found.delete(own);
   return [...found].map((s) => ({ slug: s.split("/") }));
 }

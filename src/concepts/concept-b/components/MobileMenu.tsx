@@ -50,7 +50,7 @@ export function MobileMenu({ groups, utility, markets }: MobileMenuProps) {
               Explore products
               <Icon name="arrow-right" size={18} />
             </Link>
-            <Link href="/concept-b/design-your-own" onClick={close} className={`${drawerButton} bg-action-accent text-fg-on-accent hover:bg-action-accent-hover`}>
+            <Link href="/design-your-own" onClick={close} className={`${drawerButton} bg-action-accent text-fg-on-accent hover:bg-action-accent-hover`}>
               Design your own rosette
               <Icon name="arrow-right" size={18} />
             </Link>
@@ -100,7 +100,7 @@ export function MobileMenu({ groups, utility, markets }: MobileMenuProps) {
 
           <div className="grid">
             <QuickOrder variant="drawer" />
-            <Link href="/concept-b/account/login" onClick={close} className="flex min-h-12 items-center gap-3 no-underline">
+            <Link href="/account/login" onClick={close} className="flex min-h-12 items-center gap-3 no-underline">
               <Icon name="user" size={18} />
               Log in or create account
             </Link>

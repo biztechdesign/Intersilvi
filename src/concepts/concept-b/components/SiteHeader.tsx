@@ -90,7 +90,7 @@ export function SiteHeader({ markets, nav, utility, base, cartCount = 0, custome
             <div className="lg:hidden">
               <MobileMenu groups={groups} utility={utility} markets={markets} />
             </div>
-            <Link href={base} aria-label={`${brandLogo.alt}, home`} className="inline-flex min-h-12 items-center">
+            <Link href={base || "/"} aria-label={`${brandLogo.alt}, home`} className="inline-flex min-h-12 items-center">
               <Image src={brandLogo.src} alt="" width={brandLogo.width} height={brandLogo.height} priority className="h-11 w-auto transition-[height] duration-300 lg:h-16 lg:group-data-[stuck=true]/sticky:h-12" />
             </Link>
           </div>
